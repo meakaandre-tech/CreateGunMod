@@ -5,122 +5,30 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.cgs.common.ntgl.CgsAmmoHolders;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.cgs.common.ntgl.CgsAttachmentTypes;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.ntgl.common.data.WeaponData;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.ntgl.common.foundation.entity.ProjectileEntity;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.ntgl.common.util.util.math.ExtendedEntityRayTraceResult;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.geckolib.animatable.instance.AnimatableInstanceCache;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import com.geckolib.animatable.manager.AnimatableManager;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.entity.projectile.ItemSupplier;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.SoulFireBlock;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import org.jetbrains.annotations.NotNull;
 
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import java.util.function.Predicate;
 
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.block.BaseFireBlock;
 import static com.geckolib.util.GeckoLibUtil.createInstanceCache;
 
 public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, AnimatedProjectile {
@@ -159,14 +67,14 @@ public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, A
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput compound) {
+    public void addAdditionalSaveData(ValueOutput compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("isSuperHeated", this.isSuperHeated);
         compound.putBoolean("isStrong", this.isStrong);
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput compound) {
+    public void readAdditionalSaveData(ValueInput compound) {
         super.readAdditionalSaveData(compound);
         this.isSuperHeated = compound.getBooleanOr("isSuperHeated", false);
         this.isStrong = compound.getBooleanOr("isStrong", false);
@@ -187,7 +95,7 @@ public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, A
                 }
             }
 
-            if (this.level().random.nextInt(2) == 0) {
+            if (this.level().getRandom().nextInt(2) == 0) {
                 this.level().addParticle(ParticleTypes.SMOKE, true, false, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 //                this.level().addParticle(ParticleTypes.FLAME, true, false, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }

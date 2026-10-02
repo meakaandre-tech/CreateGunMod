@@ -69,7 +69,7 @@ public class GuanoAccumulationHandler {
     }
 
     private static void tryAccumulateGuano(Level level, BlockPos pos) {
-        if (level.random.nextDouble() < ACCUMULATION_CHANCE) {
+        if (level.getRandom().nextDouble() < ACCUMULATION_CHANCE) {
             var currentState = level.getBlockState(pos);
 
             if (currentState.isAir()) {
