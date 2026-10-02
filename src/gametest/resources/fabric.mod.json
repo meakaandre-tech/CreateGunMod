@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "cgs_smoketest",
+  "version": "1.0.0",
+  "name": "Create: Gunsmithing smoke test",
+  "description": "Game tests used by CI to check that the mod starts, renders and shoots. Not part of the released jar.",
+  "environment": "*",
+  "entrypoints": {
+  },
+  "depends": {
+    "cgs": "*"
+  }
+}

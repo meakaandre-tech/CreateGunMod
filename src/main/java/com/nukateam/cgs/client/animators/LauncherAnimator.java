@@ -9,15 +9,15 @@ import com.nukateam.ntgl.client.render.renderers.weapon.DynamicWeaponRenderer;
 import com.nukateam.ntgl.common.data.holders.AttachmentType;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.RawAnimation;
-import software.bernie.geckolib.animation.PlayState;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.PlayState;
 import net.minecraft.world.item.ItemDisplayContext;
 
-import static software.bernie.geckolib.animation.Animation.LoopType.*;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.*;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public class LauncherAnimator extends WeaponAnimator {
     public static final String EMPTY = "empty";
@@ -66,7 +66,7 @@ public class LauncherAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getHoldAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getHoldAnimation(AnimationTest<WeaponAnimator> event) {
         if(ammoCount == 0){
             return playGunAnim(EMPTY, LOOP);
         }
@@ -74,7 +74,7 @@ public class LauncherAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getShootingAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getShootingAnimation(AnimationTest<WeaponAnimator> event) {
         if(isBallista){
             var animation = begin().then(getGunAnim(SHOT_BALLISTA), LOOP);
             animationHelper.syncAnimation(event, rate, SHOT_BALLISTA);
@@ -84,7 +84,7 @@ public class LauncherAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getDefaultReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getDefaultReloadAnimation(AnimationTest<WeaponAnimator> event) {
         if(isBallista){
             if (hasAir) {
                 var animation = begin().then(getGunAnim(RELOAD_BALLISTA_AUTO), PLAY_ONCE);

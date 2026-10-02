@@ -12,20 +12,20 @@ import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.util.util.FuelUtils;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import com.simibubi.create.AllSoundEvents;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
+import com.zurrtum.create.AllSoundEvents;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemDisplayContext;
-import software.bernie.geckolib.animation.PlayState;
+import com.geckolib.animation.object.PlayState;
 
 import static com.nukateam.ntgl.common.util.util.WeaponModifierHelper.isGun;
-import static software.bernie.geckolib.animation.Animation.LoopType.LOOP;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.LOOP;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public abstract class EngineAnimator extends WeaponAnimator {
     public static final String HANDLE = "handle";
@@ -66,7 +66,7 @@ public abstract class EngineAnimator extends WeaponAnimator {
     protected AnimationController.AnimationStateHandler<WeaponAnimator> animateEngine() {
         return (event) -> {
             if(isEngineWorking()) {
-                event.getController().setAnimationSpeed(1);
+                event.controller().setAnimationSpeed(1);
                 var animation = begin().then(ENGINE, LOOP);
 
                 if (shootingHandler.isOnCooldown(getEntity(), getArm())){

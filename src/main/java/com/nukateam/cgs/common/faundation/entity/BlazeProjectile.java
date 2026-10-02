@@ -10,8 +10,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.BlockHitResult;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.*;
@@ -25,8 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-import static net.neoforged.neoforge.event.EventHooks.*;
-import static software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache;
+import static com.geckolib.util.GeckoLibUtil.createInstanceCache;
 
 public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, AnimatedProjectile {
     protected final AnimatableInstanceCache cache = createInstanceCache(this);
@@ -73,13 +72,13 @@ public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, A
     @Override
     protected void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.isSuperHeated = compound.getBoolean("isSuperHeated");
-        this.isStrong = compound.getBoolean("isStrong");
+        this.isSuperHeated = compound.getBooleanOr("isSuperHeated", false);
+        this.isStrong = compound.getBooleanOr("isStrong", false);
     }
 
     @Override
     protected void onProjectileTick() {
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide()) {
 
             if(isSuperHeated){
                 for (int i = 5; i > 0; i--) {
@@ -125,7 +124,7 @@ public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, A
         var blockpos = blockHitResult.getBlockPos();
         var face = blockHitResult.getDirection();
 
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide()) {
             Entity entity = this.getOwner();
             if (!(entity instanceof Mob) || canEntityGrief(this.level(), entity)) {
                 blockpos = blockpos.relative(face);

@@ -11,13 +11,13 @@ import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import com.nukateam.ntgl.common.util.util.Cycler;
 import com.nukateam.ntgl.common.util.util.FuelUtils;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.PlayState;
+import com.geckolib.animation.*;
+import com.geckolib.animation.object.PlayState;
 import net.minecraft.world.item.ItemDisplayContext;
 
 import static com.nukateam.example.common.util.constants.Animations.*;
-import static software.bernie.geckolib.animation.Animation.LoopType.*;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.*;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public class GatlingAnimator extends EngineAnimator {
     public static final String HANDLE = "handle";
@@ -62,13 +62,13 @@ public class GatlingAnimator extends EngineAnimator {
     }
 
     @Override
-    protected RawAnimation getReloadingAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getReloadingAnimation(AnimationTest<WeaponAnimator> event) {
         HANDLE_CONTROLLER.setAnimation(begin().then(VOID, PLAY_ONCE));
         return super.getReloadingAnimation(event);
     }
 
     @Override
-    protected RawAnimation getDefaultReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getDefaultReloadAnimation(AnimationTest<WeaponAnimator> event) {
         if(hasDrum) {
             animationHelper.syncAnimation(event, reloadTime, RELOAD_DRUM);
             return begin().then(RELOAD_DRUM, LOOP);

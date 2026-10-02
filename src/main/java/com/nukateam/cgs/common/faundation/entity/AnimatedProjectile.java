@@ -1,6 +1,6 @@
 package com.nukateam.cgs.common.faundation.entity;
 
-import software.bernie.geckolib.animatable.GeoEntity;
+import com.geckolib.animatable.GeoEntity;
 
 public interface AnimatedProjectile extends GeoEntity {
 //    String getName();

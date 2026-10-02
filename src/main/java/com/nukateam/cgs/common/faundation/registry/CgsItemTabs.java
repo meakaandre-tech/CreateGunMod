@@ -9,11 +9,11 @@ import com.nukateam.ntgl.common.util.helpers.RegistrationHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredHolder;
 
 import static net.minecraft.world.item.CreativeModeTab.*;
 
@@ -23,7 +23,7 @@ public class CgsItemTabs {
 
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CGS = CREATIVE_MODE_TABS.register("mod_items",
-            () -> builder().icon(() -> new ItemStack(CgsAmmo.GATLING_ROUND.get()))
+            () -> FabricCreativeModeTab.builder().icon(() -> new ItemStack(CgsAmmo.GATLING_ROUND.get()))
                     .title(Component.translatable("itemGroup.mod_items"))
                     .displayItems(CgsItemTabs::getWeaponTab)
                     .build());
@@ -47,7 +47,6 @@ public class CgsItemTabs {
         }
     }
 
-    public static void register(IEventBus eventBus) {
-        CREATIVE_MODE_TABS.register(eventBus);
+    public static void register() {
     }
 }

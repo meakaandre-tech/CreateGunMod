@@ -2,12 +2,13 @@ package com.nukateam.cgs.common.ntgl;
 import com.nukateam.cgs.common.faundation.registry.items.CgsItems;
 import com.nukateam.cgs.common.utils.GunUtils;
 import com.nukateam.ntgl.common.data.holders.AmmoHolder;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.equipment.armor.BacktankItem;
-import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.zurrtum.create.AllItems;
+import com.zurrtum.create.content.equipment.armor.BacktankItem;
+import com.zurrtum.create.content.equipment.armor.BacktankUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import com.nukateam.ntgl.platform.PlatformHelper;
 import java.util.List;
 
 import static com.nukateam.cgs.Gunsmithing.cgsResource;
@@ -30,15 +31,15 @@ public class CgsAmmoHolders {
     public static final AmmoHolder BURNABLE = AmmoHolder.Builder
             .create(cgsResource("burnable"))
             .isAcceptable(CgsAmmoHolders::isBurnable)
-            .value((stack -> stack.getBurnTime(null)))
+            .value((stack -> PlatformHelper.getBurnTime(stack)))
             .onConsume(CgsAmmoHolders::consumeBurnable)
             .build();
 
     public static final AmmoHolder BLAZE_CAKE = AmmoHolder.Builder
             .create(cgsResource("blaze_cake"))
-            .isAcceptable(stack -> stack.getItem() == AllItems.BLAZE_CAKE.get())
+            .isAcceptable(stack -> stack.getItem() == AllItems.BLAZE_CAKE)
             .value((stack -> 20000))
-            .descriptionId((s) -> AllItems.BLAZE_CAKE.get().getDescriptionId())
+            .descriptionId((s) -> AllItems.BLAZE_CAKE.getDescriptionId())
             .build();
 
 
@@ -60,8 +61,8 @@ public class CgsAmmoHolders {
     }
 
     private static boolean isBurnable(ItemStack ammoStack) {
-        var burnTime = ammoStack.getBurnTime(null);
-        return ammoStack.getItem() != AllItems.BLAZE_CAKE.get() && burnTime > 0;
+        var burnTime = PlatformHelper.getBurnTime(ammoStack);
+        return ammoStack.getItem() != AllItems.BLAZE_CAKE && burnTime > 0;
     }
 
     private static List<ItemStack> onConsumeAir(ItemStack tank, Integer amount) {

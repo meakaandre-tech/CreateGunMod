@@ -1,167 +1,66 @@
 plugins {
-    id 'java-library'
-    id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.192'
+    id "net.fabricmc.fabric-loom" version "${loom_version}"
 }
 
-version = "${minecraft_version}-${mod_version}"
-group = 'com.nukateam.cgs'
+version = "${project.mod_version}+${project.minecraft_version}"
+group = project.maven_group
 
 base {
-    archivesName = "create-gunsmithing"
+    archivesName = project.archives_base_name
 }
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty 'forge.logging.console.level', 'debug'
-
-        modSource project.sourceSets.main
-    }
-
-    client {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    server {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    gameTestServer {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-    }
-
-    data {
-        arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-    }
-}
-
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
-    maven {
-        name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-        content {
-            includeGroupByRegex("software\\.bernie.*")
-            includeGroup("com.eliotlash.mclib")
-        }
-    }
-    maven {
-        url "https://www.cursemaven.com"
-    }
+    mavenCentral()
+}
 
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = "Modrinth"
-                url = "https://api.modrinth.com/maven"
-            }
-        }
-        filter {
-            includeGroup "maven.modrinth"
-        }
-    }
-
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
-
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
-    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
-    maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
+loom {
+    // compile with Create Fly's class tweaker, so its injected interfaces and widened members are visible
+    accessWidenerPath = file("libs/create.classtweaker")
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // for local dev
-    implementation 'com.nukateam.ntgl:ntgl-1.21.1-3.2.0'
-//    implementation "maven.modrinth:ntgl:y0nwfLDn" // 3.1.1
-    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:4.8.4"
+    // NTGL, GeckoLib 5 and Create Fly for Fabric 26.2 (and the jars nested in them), downloaded by CI into libs/
+    compileOnly fileTree(dir: "libs", include: ["*.jar", "nested/*.jar"])
 
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 
-    runtimeOnly "curse.maven:sable-1312371:8255445"
-    runtimeOnly "curse.maven:create-aeronautics-676721:8240058"
-//    implementation "curse.maven:framework-549225:7530361"
-    implementation "curse.maven:playeranimator-658587:7389814"
-    implementation "curse.maven:cloth-config-348521:5729127"
-//    implementation "curse.maven:configured-457570:7276577"
-
-    implementation "curse.maven:kotlin-for-forge-351264:7471280"
-    implementation "curse.maven:fzzy-config-1005914:7568897"
-//    implementation "maven.modrinth:subtle-effects:s3Fo4cDk"
-    implementation "maven.modrinth:jade:15.10.5+neoforge"
-
-    compileOnly "mezz.jei:jei-1.21.1-common-api:19.25.0.322"
-    compileOnly "mezz.jei:jei-1.21.1-neoforge-api:19.25.0.322"
-    localRuntime "mezz.jei:jei-1.21.1-neoforge:19.25.0.322"
+    // lets the development runs (and the CI smoke test) load the dependencies; not bundled into the jar
+    runtimeOnly fileTree(dir: "libs", include: ["*.jar"])
 }
 
-tasks.withType(ProcessResources).configureEach {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description
-    ]
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties
+// Client game test used by the CI smoke test (src/gametest, not part of the released jar)
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "cgs_smoketest"
+        enableGameTests = true
+        enableClientGameTests = true
+        eula = true
     }
 }
 
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/repo"
-        }
+processResources {
+    def version = project.version
+    inputs.property "version", version
+    filesMatching("fabric.mod.json") {
+        expand "version": version
     }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    it.options.release = 25
+    it.options.encoding = "UTF-8"
 }
 
-tasks.processResources {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+jar {
+    from("LICENSE.txt")
 }

@@ -20,8 +20,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.loading.FMLEnvironment;
+import com.nukateam.ntgl.platform.PlatformHelper;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.component.TooltipDisplay;
+import java.util.function.Consumer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -31,18 +35,13 @@ public class CgsGunItem extends WeaponItem {
     }
 
     @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return false;
-    }
-
-    @Override
     public boolean isFoil(ItemStack stack) {
         return false;
     }
 
     @Override
-    public void inventoryTick(ItemStack gun, Level level, Entity entity, int pSlotId, boolean pIsSelected) {
-        super.inventoryTick(gun, level, entity, pSlotId, pIsSelected);
+    public void inventoryTick(ItemStack gun, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+        super.inventoryTick(gun, level, entity, slot);
 
         if (entity instanceof LivingEntity livingEntity) {
             var gunData = new WeaponData(gun, livingEntity);
@@ -63,14 +62,14 @@ public class CgsGunItem extends WeaponItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            super.appendHoverText(stack, context, tooltip, tooltipFlag);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
+        if (PlatformHelper.isClient()) {
+            super.appendHoverText(stack, context, display, tooltipAdder, tooltipFlag);
             var gunData = new WeaponData(stack, ClientUtils.getPlayer());
             var fuelTypes = WeaponModifierHelper.getAllFuel(gunData);
 
             if (!fuelTypes.isEmpty()) {
-                tooltip.add(Component.translatable("info.cgs.fuel").withStyle(ChatFormatting.GRAY));
+                tooltipAdder.accept(Component.translatable("info.cgs.fuel").withStyle(ChatFormatting.GRAY));
             }
         }
     }

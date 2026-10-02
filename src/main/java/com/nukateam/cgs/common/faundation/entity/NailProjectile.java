@@ -5,8 +5,8 @@ import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.data.config.weapon.WeaponConfig;
 import com.nukateam.ntgl.common.foundation.entity.ProjectileEntity;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache;
+import static com.geckolib.util.GeckoLibUtil.createInstanceCache;
 
 public class NailProjectile extends ProjectileEntity implements AnimatedProjectile {
     protected final AnimatableInstanceCache cache = createInstanceCache(this);

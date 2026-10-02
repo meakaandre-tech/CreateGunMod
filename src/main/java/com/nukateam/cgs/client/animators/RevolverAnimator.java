@@ -11,12 +11,11 @@ import com.nukateam.ntgl.common.data.constants.Animations;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
-import software.bernie.geckolib.animation.*;
+import com.geckolib.animation.*;
 import net.minecraft.world.item.ItemDisplayContext;
 
-import static software.bernie.geckolib.animation.Animation.LoopType.*;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.*;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public class RevolverAnimator extends WeaponAnimator {
     public static final String BELT = "belt";
@@ -77,14 +76,14 @@ public class RevolverAnimator extends WeaponAnimator {
 
 //
 //    @Override
-//    protected RawAnimation playGunAnim(String name, Animation.LoopType loopType) {
+//    protected RawAnimation playGunAnim(String name, object.LoopType loopType) {
 //        if (oneHanded && animationHelper.hasAnimation(name + Animations.ONE_HAND_SUFFIX))
 //            return begin().then(name + Animations.ONE_HAND_SUFFIX, loopType);
 //        return begin().then(name, loopType);
 //    }
 
     @Override
-    protected RawAnimation getHoldAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getHoldAnimation(AnimationTest<WeaponAnimator> event) {
         if(isAuto){
             return playGunAnim("hold_auto", LOOP);
         }
@@ -92,7 +91,7 @@ public class RevolverAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getShootingAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getShootingAnimation(AnimationTest<WeaponAnimator> event) {
          if(isAuto){
             var animation = playGunAnim("shot_auto", LOOP);
             animationHelper.syncAnimation(event, "shot_auto", rate);
@@ -102,7 +101,7 @@ public class RevolverAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getReloadingAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getReloadingAnimation(AnimationTest<WeaponAnimator> event) {
         if(hasBelt){
             var animation = begin();
             animation.then("reload_belt", LOOP);

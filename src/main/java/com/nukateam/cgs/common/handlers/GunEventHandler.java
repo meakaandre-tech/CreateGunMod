@@ -17,27 +17,25 @@ import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.util.util.InventoryUtil;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.content.equipment.armor.BacktankBlockEntity;
-import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.zurrtum.create.AllBlocks;
+import com.zurrtum.create.AllItems;
+import com.zurrtum.create.content.equipment.armor.BacktankBlockEntity;
+import com.zurrtum.create.content.equipment.armor.BacktankUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import com.nukateam.ntgl.platform.SubscribeEvent;
 
 import static com.nukateam.cgs.common.utils.GunUtils.fillFuel;
 import static net.minecraft.world.phys.HitResult.Type.BLOCK;
 
-@EventBusSubscriber(modid = Gunsmithing.MOD_ID)
 public class GunEventHandler {
     @SubscribeEvent
     public static void preShoot(GunFireEvent.Pre event) {
         var shooter = event.getEntity();
         var gun = shooter.getItemInHand(event.getHand());
         var gunData = new WeaponData(gun, shooter);
-        var hasExtendoGrip = shooter.getOffhandItem().getItem() == AllItems.EXTENDO_GRIP.get();
+        var hasExtendoGrip = shooter.getOffhandItem().getItem() == AllItems.EXTENDO_GRIP;
 
         if(hasExtendoGrip && !WeaponModifierHelper.isOneHanded(gunData)){
             event.setCanceled(true);
@@ -86,7 +84,7 @@ public class GunEventHandler {
         var shooter = event.getEntity();
         var data = new WeaponData(gun, shooter);
 
-        if(!event.getEntity().level().isClientSide && shooter instanceof Player player) {
+        if(!event.getEntity().level().isClientSide() && shooter instanceof Player player) {
             var fuels = WeaponModifierHelper.getAllFuel(data);
             fuels.forEach((fuel) -> {
                 var foundFuel = (IAmmoContext)AmmoContext.NONE;
@@ -112,7 +110,7 @@ public class GunEventHandler {
         var shooter = event.getEntity();
         var data = new WeaponData(gun, shooter);
 
-        if(!event.getEntity().level().isClientSide) {
+        if(!event.getEntity().level().isClientSide()) {
             if (gun.getItem() == CgsWeapons.SHOTGUN.get()) {
                 checkCock(data);
             }
@@ -183,7 +181,7 @@ public class GunEventHandler {
             var blockState = level.getBlockState(blockPos);
             var blockEntity = level.getBlockEntity(blockPos);
 
-            if(blockState.getBlock() == AllBlocks.COPPER_BACKTANK.get()
+            if(blockState.getBlock() == AllBlocks.COPPER_BACKTANK
                     && blockEntity instanceof BacktankBlockEntity tankEntity){
                 var airLevel = tankEntity.getAirLevel();
                 int max = BacktankUtil.maxAir(0);
@@ -195,7 +193,7 @@ public class GunEventHandler {
     }
 
     public static void explodeOnHit(Level level, BlockPos pos) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.destroyBlock(pos, false);
             level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 6.0f, Level.ExplosionInteraction.NONE);
         }

@@ -8,24 +8,23 @@ import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.client.event.InputEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import com.nukateam.ntgl.platform.event.client.InputEvent;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import com.nukateam.ntgl.platform.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(value = Dist.CLIENT)
 public class InputEventHandler {
 
     @SubscribeEvent
-    public static void onMouseInput(InputEvent.MouseButton.Pre event){
+    public static void onMouseInput(InputEvent.MouseButton.Post event){
         if(isInGame()) {
             var mc = Minecraft.getInstance();
             var player = mc.player;
             var mainHandItem = player.getMainHandItem();
             var offhandItem = player.getOffhandItem();
 
-            if (event.getAction() == GLFW.GLFW_RELEASE && event.getButton() == mc.options.keyUse.getKey().getValue()) {
+            if (event.getAction() == GLFW.GLFW_RELEASE && event.getButton() == KeyMappingHelper.getBoundKeyOf(mc.options.keyUse).getValue()) {
                 if (WeaponModifierHelper.isGun(mainHandItem)) {
                     fillEngine(mainHandItem, offhandItem);
                 } else if (WeaponModifierHelper.isGun(offhandItem)) {
@@ -38,7 +37,7 @@ public class InputEventHandler {
     private static void fillEngine(ItemStack gun, ItemStack fuelStack) {
         var mc = Minecraft.getInstance();
         if(canAcceptFuel(gun, fuelStack)){
-            Minecraft.getInstance().getConnection().send(new C2SMessageFuel());
+            ClientPlayNetworking.send(new C2SMessageFuel());
             mc.options.keyUse.setDown(false);
         }
     }

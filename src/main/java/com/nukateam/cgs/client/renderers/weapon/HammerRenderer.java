@@ -5,6 +5,6 @@ import com.nukateam.cgs.client.layers.HammerHeadLayer;
 public class HammerRenderer extends BaseWeaponRenderer {
     public HammerRenderer() {
         super();
-        addRenderLayer(new HammerHeadLayer<>(this));
+        withRenderLayer(new HammerHeadLayer<>(this));
     }
 }

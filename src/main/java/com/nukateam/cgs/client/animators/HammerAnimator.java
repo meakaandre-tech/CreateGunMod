@@ -12,8 +12,8 @@ import com.nukateam.ntgl.common.data.holders.WeaponMode;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.RawAnimation;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animation.RawAnimation;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.nukateam.ntgl.client.util.helpers.TransformUtils.isFirstPerson;
-import static software.bernie.geckolib.animation.Animation.LoopType.*;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.*;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public class HammerAnimator extends WeaponAnimator {
     public static final String MELEE_POWER_END = "melee_power_end";
@@ -58,7 +58,7 @@ public class HammerAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getMeleeDelayAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getMeleeDelayAnimation(AnimationTest<WeaponAnimator> event) {
         if(isFirstPerson(transformType)) {
             if(isSecondary && HammerItem.isPowered(data)){
                 isPowered = true;
@@ -81,7 +81,7 @@ public class HammerAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getMeleeCooldownAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getMeleeCooldownAnimation(AnimationTest<WeaponAnimator> event) {
         if(isFirstPerson(transformType)) {
             if (isSecondary && isPowered) {
                 if (!animationHelper.hasAnimation(MELEE_POWER_END))
@@ -108,7 +108,7 @@ public class HammerAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getDefaultReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getDefaultReloadAnimation(AnimationTest<WeaponAnimator> event) {
         if(isShotPowered()){
             var animations = new ArrayList<>(List.of(RELOAD_SHOT));
             var animation = begin().then(getGunAnim(RELOAD_SHOT), PLAY_ONCE);
@@ -129,7 +129,7 @@ public class HammerAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getHoldAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getHoldAnimation(AnimationTest<WeaponAnimator> event) {
         if(isFirstPerson(transformType))
             return super.getHoldAnimation(event);
         else return null;

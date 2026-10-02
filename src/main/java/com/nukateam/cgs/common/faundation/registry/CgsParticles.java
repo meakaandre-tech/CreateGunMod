@@ -4,12 +4,10 @@ import com.nukateam.cgs.Gunsmithing;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.IEventBus;
 
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredRegister;
 
 public class CgsParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =
@@ -19,7 +17,6 @@ public class CgsParticles {
             PARTICLE_TYPES.register("blue_flame", () -> new SimpleParticleType(false));
 
 
-    public static void register(IEventBus eventBus) {
-        PARTICLE_TYPES.register(eventBus);
+    public static void register() {
     }
 }

@@ -14,8 +14,8 @@ import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.event.MeleeAttackEvent;
 import com.nukateam.ntgl.common.util.util.StackUtils;
-import com.simibubi.create.content.kinetics.saw.TreeCutter;
-import net.createmod.catnip.math.VecHelper;
+import com.zurrtum.create.content.kinetics.saw.TreeCutter;
+import com.zurrtum.create.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -25,19 +25,16 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
+
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import com.nukateam.ntgl.platform.SubscribeEvent;
 import org.jetbrains.annotations.NotNull;
-import net.neoforged.neoforge.common.SimpleTier;
 
-@EventBusSubscriber(modid = Gunsmithing.MOD_ID)
 public class MeleeHandler {
     public static BreakHandler HAMMER_HANDLER = new BreakHandler(
             MeleeHandler::isToolTierSufficient,
@@ -114,7 +111,7 @@ public class MeleeHandler {
         level.addFreshEntity(itemEntity);
     }
 
-    private static void breakBlocks3x3(ServerPlayer player, Tier toolTier, BreakHandler handler, ItemStack stack, BlockHitResult hitResult) {
+    private static void breakBlocks3x3(ServerPlayer player, ToolMaterial toolTier, BreakHandler handler, ItemStack stack, BlockHitResult hitResult) {
         var planeDirs = getPlaneDirections(hitResult.getDirection());
 
         for (int u = -1; u <= 1; u++) {
@@ -138,7 +135,7 @@ public class MeleeHandler {
         );
     }
 
-    private static void breakBlockAt(ServerPlayer player, Tier toolTier, ItemStack stack,
+    private static void breakBlockAt(ServerPlayer player, ToolMaterial toolTier, ItemStack stack,
                                      BlockPos targetPos, BreakHandler handler) {
         var blockState = player.level().getBlockState(targetPos);
         var canDistroy = blockState.getDestroySpeed(player.level(), targetPos) >= 0;
@@ -152,13 +149,13 @@ public class MeleeHandler {
         }
     }
 
-    public static boolean isToolTierSufficient(BlockState blockState, Tier toolTier) {
+    public static boolean isToolTierSufficient(BlockState blockState, ToolMaterial toolTier) {
         if (blockState.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
-            return toolTier == Tiers.DIAMOND;
+            return toolToolMaterial == ToolMaterial.DIAMOND;
         } else if (blockState.is(BlockTags.NEEDS_IRON_TOOL)) {
-            return toolTier == Tiers.IRON || toolTier == Tiers.DIAMOND;
+            return toolToolMaterial == ToolMaterial.IRON || toolToolMaterial == ToolMaterial.DIAMOND;
         } else if (blockState.is(BlockTags.NEEDS_STONE_TOOL)) {
-            return toolTier == Tiers.STONE ||toolTier == Tiers.IRON || toolTier == Tiers.DIAMOND;
+            return toolToolMaterial == ToolMaterial.STONE ||toolToolMaterial == ToolMaterial.IRON || toolToolMaterial == ToolMaterial.DIAMOND;
         }
 
         return true;

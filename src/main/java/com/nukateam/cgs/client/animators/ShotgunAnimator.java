@@ -11,17 +11,17 @@ import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import com.nukateam.ntgl.common.util.util.Cycler;
 import com.nukateam.ntgl.common.data.WeaponData;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.AnimationController.AnimationStateHandler;
+import com.geckolib.animation.*;
+import com.geckolib.animation.AnimationController.AnimationStateHandler;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import static com.nukateam.ntgl.common.util.util.WeaponModifierHelper.*;
-import static software.bernie.geckolib.animation.Animation.LoopType.LOOP;
-import static software.bernie.geckolib.animation.Animation.LoopType.PLAY_ONCE;
-import static software.bernie.geckolib.animation.RawAnimation.begin;
+import static com.geckolib.animation.object.LoopType.LOOP;
+import static com.geckolib.animation.object.LoopType.PLAY_ONCE;
+import static com.geckolib.animation.RawAnimation.begin;
 
 public class ShotgunAnimator extends WeaponAnimator {
     public static final String SHOT_DRUM = "shot_drum";
@@ -86,7 +86,7 @@ public class ShotgunAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getShootingAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getShootingAnimation(AnimationTest<WeaponAnimator> event) {
         var animation = begin();
         var animations = new ArrayList<String>();
 
@@ -111,7 +111,7 @@ public class ShotgunAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getStartReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getStartReloadAnimation(AnimationTest<WeaponAnimator> event) {
         if(hasPumps) {
             var data = getWeaponData();
             int time = getReloadStart(data);
@@ -122,7 +122,7 @@ public class ShotgunAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getDefaultReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getDefaultReloadAnimation(AnimationTest<WeaponAnimator> event) {
         var data = getWeaponData();
         var reloadTime = getReloadTime(data);
         if(hasDrums){
@@ -141,7 +141,7 @@ public class ShotgunAnimator extends WeaponAnimator {
     }
 
     @Override
-    protected RawAnimation getEndReloadAnimation(AnimationState<WeaponAnimator> event) {
+    protected RawAnimation getEndReloadAnimation(AnimationTest<WeaponAnimator> event) {
         if(hasPumps) {
             var data = getWeaponData();
             int time = getReloadEnd(data);

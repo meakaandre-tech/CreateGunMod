@@ -1,16 +1,14 @@
 package com.nukateam.cgs.client.renderers.weapon;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.geckolib.animation.state.BoneSnapshots;
+import com.geckolib.cache.model.GeoBone;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.renderer.base.RenderPassInfo;
 import com.nukateam.cgs.common.faundation.registry.items.CgsAttachments;
-import com.nukateam.ntgl.client.animators.WeaponAnimator;
 import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.data.holders.AttachmentType;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import software.bernie.geckolib.cache.object.GeoBone;
 
 public class FlintlockRenderer extends BaseWeaponRenderer {
     public FlintlockRenderer() {
@@ -18,32 +16,28 @@ public class FlintlockRenderer extends BaseWeaponRenderer {
     }
 
     @Override
-    public void renderRecursively(PoseStack poseStack, WeaponAnimator animatable, GeoBone bone, RenderType renderType,
-                                  MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender,
-                                  float partialTick, int packedLight, int packedOverlay,
-                                  int color) {
-        poseStack.pushPose();
-        if (bone.getName().equals("scope") && hasRevolvingChambersEquiped()) {
-            poseStack.translate(0, 0 , -3 / 16d);
-//            poseStack.translate(0, 0 , -4 / 16d);
+    protected void updateBone(RenderPassInfo<GeoRenderState> renderPassInfo, GeoBone bone, BoneSnapshots snapshots) {
+        super.updateBone(renderPassInfo, bone, snapshots);
+        var name = bone.name();
+
+        if (name.equals("scope") && hasRevolvingChambersEquiped()) {
+            var snapshot = snapshots.get(bone);
+            snapshot.setTranslateZ(snapshot.getTranslateZ() - 3);
         }
 
-        if (bone.getName().equals("magazine") && hasBlunderbussEquiped()) {
+        if (name.equals("magazine") && hasBlunderbussEquiped()) {
             var scale = 1.3f;
-            poseStack.scale(scale, scale, scale);
-            poseStack.translate(0, -2.2 / 16d, 0);
+            var snapshot = snapshots.get(bone);
+            snapshot.setScale(snapshot.getScaleX() * scale, snapshot.getScaleY() * scale, snapshot.getScaleZ() * scale);
+            snapshot.setTranslateY(snapshot.getTranslateY() - 2.2f);
         }
 
-        if (bone.getName().equals("melee2")) {
-            var barrel = WeaponStateHelper.getAttachmentItem(AttachmentType.BARREL, new WeaponData(animatable.getStack(), Minecraft.getInstance().player));
+        if (name.equals("melee2")) {
+            var barrel = WeaponStateHelper.getAttachmentItem(AttachmentType.BARREL, new WeaponData(gunStack, Minecraft.getInstance().player));
+
             if(barrel.getItem() == CgsAttachments.FLINTLOCK_LONG_BARREL.get())
-                bone.setHidden(true);
+                setHidden(snapshots, bone, true);
         }
-        else bone.setHidden(false);
-
-        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick,
-                packedLight, packedOverlay, color);
-        poseStack.popPose();
     }
 
     private boolean hasRevolvingChambersEquiped() {

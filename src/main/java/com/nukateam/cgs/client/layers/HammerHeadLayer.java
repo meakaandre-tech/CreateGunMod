@@ -1,59 +1,58 @@
 package com.nukateam.cgs.client.layers;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.geckolib.constant.dataticket.DataTicket;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.renderer.base.GeoRenderer;
+import com.geckolib.renderer.base.RenderPassInfo;
 import com.nukateam.cgs.Gunsmithing;
 import com.nukateam.cgs.common.faundation.item.attachments.HammerHeadItem;
 import com.nukateam.cgs.common.ntgl.CgsAttachmentTypes;
 import com.nukateam.ntgl.client.animators.WeaponAnimator;
+import com.nukateam.ntgl.client.render.layers.LayerBase;
 import com.nukateam.ntgl.common.data.WeaponData;
-import com.nukateam.ntgl.common.data.config.weapon.WeaponConfig;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
-import com.nukateam.ntgl.common.util.util.ResourceUtils;
 import net.minecraft.client.Minecraft;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.renderer.GeoRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Locale;
-
-public class HammerHeadLayer<T extends WeaponAnimator> extends LayerBase<T> {
+/** Draws the hammer once more with the texture of the attached head (stone, iron, diamond, netherite). */
+public class HammerHeadLayer<T extends WeaponAnimator, O, R extends GeoRenderState> extends LayerBase<T, O, R> {
     public static final String PATH = "textures/weapons/hammer/";
-    public static HashMap<ResourceLocation, Boolean> textures = new HashMap<>();
-    public HammerHeadLayer(GeoRenderer<T> entityRenderer) {
+    public static final DataTicket<Identifier> HEAD_TEXTURE = DataTicket.create("cgs_hammer_head_texture", Identifier.class);
+
+    public HammerHeadLayer(GeoRenderer<T, O, R> entityRenderer) {
         super(entityRenderer);
     }
 
-    protected boolean resourceExists(ResourceLocation location){
-        if (!textures.containsKey(location))
-            textures.put(location, ResourceUtils.resourceExists(location));
+    @Override
+    public void addRenderData(T animatable, O relatedObject, R renderState, float partialTick) {
+        var texture = getHeadTexture(animatable);
 
-        return textures.get(location);
+        if (texture != null)
+            renderState.addGeckolibData(HEAD_TEXTURE, texture);
     }
 
     @Override
-    public void render(PoseStack poseStack, T animatable, BakedGeoModel bakedModel, RenderType renderType,
-                       MultiBufferSource bufferSource, VertexConsumer buffer,
-                       float partialTick, int packedLight, int packedOverlay) {
-        var texture = getHeadTexture(animatable);
-        if(texture != null) {
-            renderLayer(poseStack, animatable, bakedModel, bufferSource, partialTick, packedLight, texture);
-        }
+    public void submitRenderTask(RenderPassInfo<R> renderPassInfo, SubmitNodeCollector collector) {
+        var texture = renderPassInfo.renderState().getOrDefaultGeckolibData(HEAD_TEXTURE, (Identifier) null);
+
+        if (texture != null && renderPassInfo.willRender())
+            this.renderer.submitRenderTasks(renderPassInfo, collector.order(1), RenderTypes.armorCutoutNoCull(texture));
     }
 
     @Nullable
-    private ResourceLocation getHeadTexture(T animatable) {
-        var attachment = WeaponStateHelper.getAttachmentItem(CgsAttachmentTypes.HEAD,
-                new WeaponData(animatable.getStack(), Minecraft.getInstance().player));
+    private Identifier getHeadTexture(T animatable) {
+        var stack = animatable.getStack();
+        if (stack == null || stack.isEmpty()) return null;
 
-        if(!attachment.isEmpty()){
-            var head = (HammerHeadItem)attachment.getItem();
-            var name = "hammer_" + head.getTier().toString().toLowerCase(Locale.ROOT) + ".png";
-            return ResourceLocation.fromNamespaceAndPath(Gunsmithing.MOD_ID, PATH + name);
+        var attachment = WeaponStateHelper.getAttachmentItem(CgsAttachmentTypes.HEAD,
+                new WeaponData(stack, Minecraft.getInstance().player));
+
+        if(!attachment.isEmpty() && attachment.getItem() instanceof HammerHeadItem head){
+            var name = "hammer_" + head.getTierName() + ".png";
+            return Identifier.fromNamespaceAndPath(Gunsmithing.MOD_ID, PATH + name);
         }
         return null;
     }

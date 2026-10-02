@@ -7,9 +7,10 @@ import com.nukateam.ntgl.common.util.interfaces.IWeaponModifier;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.loading.FMLEnvironment;
+import com.nukateam.ntgl.platform.PlatformHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.network.chat.Component;
 
 public class LauncherItem extends CgsGunItem {
     public LauncherItem(Properties properties, IWeaponModifier... modifiers) {
@@ -17,22 +18,21 @@ public class LauncherItem extends CgsGunItem {
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            return getClientDescriptionId(stack);
+    public Component getName(ItemStack stack) {
+        if (PlatformHelper.isClient() && isClientBallistazooka(stack)) {
+            return Component.translatable("item.cgs.ballistazooka");
         }
-        return super.getDescriptionId(stack);
+        return super.getName(stack);
     }
-
-    @OnlyIn(Dist.CLIENT)
-    private String getClientDescriptionId(ItemStack stack) {
+    @Environment(EnvType.CLIENT)
+    private boolean isClientBallistazooka(ItemStack stack) {
         var magazineAttachment = WeaponStateHelper.getAttachmentItem(AttachmentType.MAGAZINE,
                 new WeaponData(stack, Minecraft.getInstance().player)).getItem();
 
         if(magazineAttachment == CgsAttachments.BALLISTAZOOKA.get()){
-            return "item.cgs.ballistazooka";
+            return true;
         }
 
-        return super.getDescriptionId(stack);
+        return false;
     }
 }

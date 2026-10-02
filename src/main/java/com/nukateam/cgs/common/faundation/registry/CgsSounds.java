@@ -1,12 +1,11 @@
 package com.nukateam.cgs.common.faundation.registry;
 
 import com.nukateam.cgs.Gunsmithing;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredRegister;
 import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredHolder;
 
 public class CgsSounds {
     public static final DeferredRegister<SoundEvent> REGISTER = DeferredRegister.create(Registries.SOUND_EVENT, Gunsmithing.MOD_ID);
@@ -59,10 +58,9 @@ public class CgsSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> HAMMER_EQUIP = register("gun.hammer.equip");
 
     private static DeferredHolder<SoundEvent, SoundEvent> register(String key) {
-        return REGISTER.register(key, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Gunsmithing.MOD_ID, key)));
+        return REGISTER.register(key, () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Gunsmithing.MOD_ID, key)));
     }
 
-    public static void register(IEventBus eventBus) {
-        REGISTER.register(eventBus);
+    public static void register() {
     }
 }

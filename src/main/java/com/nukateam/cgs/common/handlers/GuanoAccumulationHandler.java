@@ -11,17 +11,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.entity.living.LivingEvent;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import com.nukateam.ntgl.platform.SubscribeEvent;
+import com.nukateam.ntgl.platform.event.EntityTickEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static net.minecraft.world.level.block.Block.popResource;
 
-@EventBusSubscriber(modid = Gunsmithing.MOD_ID)
 public class GuanoAccumulationHandler {
     private static final Map<BlockPos, Long> batTrackingMap = new HashMap<>();
     private static final int ACCUMULATION_TIME = 30 * 20;
@@ -30,7 +27,7 @@ public class GuanoAccumulationHandler {
     @SubscribeEvent
     public static void onBatUpdate(EntityTickEvent.Pre event) {
         if (!(event.getEntity() instanceof Bat bat)) return;
-        if (bat.level().isClientSide) return;
+        if (bat.level().isClientSide()) return;
 
         var level = bat.level();
         var batPos = bat.blockPosition();

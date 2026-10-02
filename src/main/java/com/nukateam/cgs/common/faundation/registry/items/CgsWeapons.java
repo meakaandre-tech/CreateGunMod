@@ -6,8 +6,8 @@ import com.nukateam.cgs.common.ntgl.modifiers.HammerModifier;
 import com.nukateam.ntgl.common.foundation.item.WeaponItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.*;
+import com.nukateam.ntgl.platform.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredRegister;
 import java.util.function.Function;
 
 public class CgsWeapons {
@@ -27,23 +27,21 @@ public class CgsWeapons {
     public static final DeferredHolder<Item, WeaponItem> GRENADE = registerGrenade("frag_grenade", WeaponItem::new);
 
     private static DeferredHolder<Item, WeaponItem> registerGun(String name, Function<Item.Properties, WeaponItem> item) {
-        return ITEMS.register(name,
-                () -> item.apply(new Item.Properties().stacksTo(1)));
+        return ITEMS.registerItem(name, p -> item.apply(p.stacksTo(1)));
     }
 
     private static DeferredHolder<Item, WeaponItem> registerGrenade(String name, Function<Item.Properties, WeaponItem> item) {
-        return ITEMS.register(name, () -> item.apply(new Item.Properties().stacksTo(16)));
+        return ITEMS.registerItem(name, p -> item.apply(p.stacksTo(16)));
     }
 
     public static DeferredHolder<Item, WeaponItem> registerGun(String name) {
-        return ITEMS.register(name, () -> new CgsGunItem(new Item.Properties().stacksTo(1)));
+        return ITEMS.registerItem(name, p -> new CgsGunItem(p.stacksTo(1)));
     }
 
     public static DeferredHolder<Item, WeaponItem> registerGun(String name, int durability) {
-        return ITEMS.register(name, () -> new CgsGunItem(new Item.Properties().durability(durability)));
+        return ITEMS.registerItem(name, p -> new CgsGunItem(p.durability(durability)));
     }
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+    public static void register() {
     }
 }

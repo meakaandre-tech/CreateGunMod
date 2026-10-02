@@ -2,96 +2,55 @@
 package com.nukateam.cgs.common.faundation.registry.items;
 
 import com.nukateam.cgs.Gunsmithing;
-import com.nukateam.cgs.common.datagen.annotations.ItemModelGen;
 import com.nukateam.cgs.common.faundation.item.FluidContainerItem;
 import com.nukateam.cgs.common.faundation.registry.CgsBlocks;
 import com.nukateam.ntgl.common.foundation.item.AmmoItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredRegister;
 import net.minecraft.core.registries.Registries;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredHolder;
 
 import java.util.Map;
 import java.util.function.Function;
 
 public class CgsItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, Gunsmithing.MOD_ID);
-
-    @ItemModelGen
-    public static final DeferredHolder<Item, Item> EMPTY_CONTAINER = ITEMS.register("tank_empty",
-            () -> new FluidContainerItem(Fluids.EMPTY,
-                    new Item.Properties().stacksTo(16)));
-
-    @ItemModelGen
-    public static final DeferredHolder<Item, Item> WATER_CONTAINER = ITEMS.register("tank_water",
-            () -> new FluidContainerItem(Fluids.WATER,
-                    new Item.Properties().stacksTo(16)));
-
-    @ItemModelGen
-    public static final DeferredHolder<Item, Item> LAVA_CONTAINER = ITEMS.register("tank_lava",
-            () -> new FluidContainerItem(Fluids.LAVA,
-                    new Item.Properties().stacksTo(16)));
+    public static final DeferredHolder<Item, Item> EMPTY_CONTAINER = ITEMS.registerItem("tank_empty",
+            p -> new FluidContainerItem(Fluids.EMPTY, p.stacksTo(16)));
+    public static final DeferredHolder<Item, Item> WATER_CONTAINER = ITEMS.registerItem("tank_water",
+            p -> new FluidContainerItem(Fluids.WATER, p.stacksTo(16).craftRemainder(EMPTY_CONTAINER.get())));
+    public static final DeferredHolder<Item, Item> LAVA_CONTAINER = ITEMS.registerItem("tank_lava",
+            p -> new FluidContainerItem(Fluids.LAVA, p.stacksTo(16).craftRemainder(EMPTY_CONTAINER.get())));
 
     public static Map<Fluid, DeferredHolder<Item, Item>> CONTAINERS = Map.of(
             Fluids.WATER, WATER_CONTAINER,
             Fluids.LAVA, LAVA_CONTAINER
     );
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> PRESS_FORM_GATLING = registerItem("press_form_gatling");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> PRESS_FORM_REVOLVER = registerItem("press_form_revolver");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> PRESS_FORM_SHOTGUN = registerItem("press_form_shotgun");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> LEAD_INGOT = registerItem ("lead_ingot");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> STEEL_INGOT = registerItem ("steel_ingot");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> LEAD_NUGGET = registerItem("lead_nugget");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> STEEL_NUGGET = registerItem ("steel_nugget");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> STEEL_SHEET = registerItem ("steel_sheet");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> RAW_LEAD = registerItem("raw_lead");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> NITER = registerItem ("niter");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> SULFUR = registerItem ("sulfur");
-
-    @ItemModelGen
     public static final DeferredHolder<Item, Item> CHARCOAL_DUST = registerItem ("charcoal_dust");
-
-    @ItemModelGen
-    public static final DeferredHolder<Item, Item> GUANO = ITEMS.register("guano",
-            () -> new ItemNameBlockItem(CgsBlocks.GUANO_BLOCK.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, Item> GUANO = ITEMS.registerItem("guano",
+            p -> new BlockItem(CgsBlocks.GUANO_BLOCK.get(), p.useItemDescriptionPrefix()));
 
 
-    public static DeferredHolder<Item, Item> registerItem(String name, Item.Properties properties) {
-        return ITEMS.register(name, () -> new Item(properties));
-    }
-
+    
     public static DeferredHolder<Item, Item> registerItem(String name) {
-        return registerItem(name, new Item.Properties());
+        return ITEMS.registerItem(name, Item::new);
     }
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+    public static void register() {
     }
 }

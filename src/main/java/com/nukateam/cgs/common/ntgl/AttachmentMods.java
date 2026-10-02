@@ -19,7 +19,7 @@ import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.util.interfaces.IWeaponModifier;
 import com.nukateam.ntgl.common.data.WeaponData;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
@@ -134,7 +134,7 @@ public class AttachmentMods {
         }
 
         @Override
-        public float modifyProjectileDamage(float damage, ResourceLocation ammo, WeaponData data) {
+        public float modifyProjectileDamage(float damage, Identifier ammo, WeaponData data) {
             if(data.weapon == null) return damage;
 
             if(data.weapon.getItem() == CgsWeapons.NAILGUN.get()) {
@@ -196,7 +196,7 @@ public class AttachmentMods {
         }
 
         @Override
-        public ResourceLocation modifySound(String name, ResourceLocation sound, WeaponData data) {
+        public Identifier modifySound(String name, Identifier sound, WeaponData data) {
             if(name.equals(SoundType.FIRE.getName())
                     && data.weapon != null
                     && data.weapon.getItem() == CgsWeapons.NAILGUN.get()) {
@@ -386,7 +386,7 @@ public class AttachmentMods {
         }
 
         @Override
-        public float modifyProjectileDamage(float damage, ResourceLocation ammo, WeaponData data) {
+        public float modifyProjectileDamage(float damage, Identifier ammo, WeaponData data) {
             return damage * 1.5f;
         }
 
@@ -414,7 +414,7 @@ public class AttachmentMods {
 //        }
 
         @Override
-        public float modifyProjectileDamage(float damage, ResourceLocation ammo, WeaponData data) {
+        public float modifyProjectileDamage(float damage, Identifier ammo, WeaponData data) {
             return damage * 1.5f;
         }
 
@@ -431,12 +431,12 @@ public class AttachmentMods {
         }
 
         @Override
-        public int modifyMaxFuel(ResourceLocation ammo, int max, WeaponData data) {
+        public int modifyMaxFuel(Identifier ammo, int max, WeaponData data) {
             return 1;
         }
 
         @Override
-        public boolean modifyIsFuelMandatory(ResourceLocation ammo, boolean value, WeaponData data) {
+        public boolean modifyIsFuelMandatory(Identifier ammo, boolean value, WeaponData data) {
             return true;
         }
     };
@@ -586,7 +586,7 @@ public class AttachmentMods {
 
     public static final IWeaponModifier SHOTGUN_SPREAD_BARREL = new IWeaponModifier() {
         @Override
-        public float modifyProjectileDamage(float damage, ResourceLocation ammo, WeaponData data) {
+        public float modifyProjectileDamage(float damage, Identifier ammo, WeaponData data) {
             return damage * 1.5f;
         }
 
@@ -601,7 +601,7 @@ public class AttachmentMods {
         public static final int AMMO_PER_SHOT = 5;
 
         @Override
-        public float modifyProjectileDamage(float damage, ResourceLocation ammo, WeaponData data) {
+        public float modifyProjectileDamage(float damage, Identifier ammo, WeaponData data) {
             return damage * getProjectileAmount(data) * 0.8f;
         }
 
@@ -670,7 +670,7 @@ public class AttachmentMods {
 
     private static float getHeadMeleeDamage(float damage, ItemStack attachment) {
         if(attachment.getItem() instanceof HammerHeadItem headItem) {
-            return damage + 2 + headItem.getTier().getAttackDamageBonus() * 2;
+            return damage + 2 + headItem.getTier().attackDamageBonus() * 2;
         }
         return damage;
     }
@@ -772,7 +772,7 @@ public class AttachmentMods {
         }
 
         @Override
-        public ResourceLocation modifySound(String name, ResourceLocation sound, WeaponData data) {
+        public Identifier modifySound(String name, Identifier sound, WeaponData data) {
             if(name.equals(SoundType.FIRE.getName()))
                 return CgsSounds.BALLISTA_FIRE.getId();
             return sound;
@@ -791,7 +791,7 @@ public class AttachmentMods {
         }
 
         @Override
-        public int modifyFuelAmountPerUse(ResourceLocation ammo, int value, WeaponData data) {
+        public int modifyFuelAmountPerUse(Identifier ammo, int value, WeaponData data) {
             if(ammo.equals(CgsAmmoHolders.AIR.getId()))
                 return  1;
             return value;

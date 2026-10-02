@@ -30,3 +30,7 @@ forge*changelog.txt
 /runs/junit/junit_jvm_args.txt
 /runs/junit/junit_test_args.txt
 /runs/
+
+# fabric port
+/libs/
+/run/

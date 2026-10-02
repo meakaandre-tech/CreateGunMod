@@ -8,8 +8,8 @@ import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import com.nukateam.ntgl.common.foundation.init.ModSounds;
 import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
-import com.simibubi.create.AllDataComponents;
-import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.zurrtum.create.AllDataComponents;
+import com.zurrtum.create.content.equipment.armor.BacktankUtil;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -93,11 +93,11 @@ public class GunUtils {
     }
 
     public static void setCock(ItemStack weapon, int i) {
-        weapon.set(CgsComponents.COCK, i);
+        weapon.set(CgsComponents.COCK.get(), i);
     }
 
     public static int getCock(ItemStack weapon) {
-        return weapon.getOrDefault(CgsComponents.COCK, 0);
+        return weapon.getOrDefault(CgsComponents.COCK.get(), 0);
     }
 
     public static boolean hasAir(WeaponData gunData) {

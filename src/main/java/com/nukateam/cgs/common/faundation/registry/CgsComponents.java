@@ -7,26 +7,22 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.nukateam.ntgl.platform.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredRegister;
 
 import javax.annotation.Nullable;
 
 public class CgsComponents {
-    public static final DeferredRegister.DataComponents REGISTER =
-            DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Ntgl.MOD_ID);
+    public static final DeferredRegister<DataComponentType<?>> REGISTER =
+            DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Ntgl.MOD_ID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> COCK =
-            REGISTER.registerComponentType(
-                    "cock",
-                    builder -> builder
-                            .persistent(Codec.INT)
-                            .networkSynchronized(ByteBufCodecs.INT)
-            );
+            REGISTER.register("cock", () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.INT)
+                    .build());
 
 
-    public static void register(IEventBus eventBus) {
-        REGISTER.register(eventBus);
+    public static void register() {
     }
 }

@@ -3,12 +3,12 @@ package com.nukateam.cgs.common.faundation.entity;
 import com.nukateam.ntgl.common.data.WeaponData;
 import com.nukateam.ntgl.common.foundation.entity.MissileEntity;
 import com.nukateam.ntgl.common.foundation.entity.ProjectileEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
-import static software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache;
+import static com.geckolib.util.GeckoLibUtil.createInstanceCache;
 
 public class RocketProjectile extends MissileEntity implements AnimatedProjectile {
     protected final AnimatableInstanceCache cache = createInstanceCache(this);

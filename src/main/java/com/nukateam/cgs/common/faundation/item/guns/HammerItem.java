@@ -8,9 +8,10 @@ import com.nukateam.ntgl.common.util.util.WeaponModifierHelper;
 import com.nukateam.ntgl.common.util.util.WeaponStateHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.loading.FMLEnvironment;
+import com.nukateam.ntgl.platform.PlatformHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.network.chat.Component;
 
 public class HammerItem extends CgsGunItem {
     public HammerItem(Properties properties, IWeaponModifier... modifiers) {
@@ -23,15 +24,14 @@ public class HammerItem extends CgsGunItem {
     }
 
     @Override
-    public String getDescriptionId(ItemStack stack) {
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            return getClientDescriptionId(stack);
+    public Component getName(ItemStack stack) {
+        if (PlatformHelper.isClient() && isClientAxe(stack)) {
+            return Component.translatable("item.cgs.axe");
         }
-        return super.getDescriptionId(stack);
+        return super.getName(stack);
     }
-
-    @OnlyIn(Dist.CLIENT)
-    private String getClientDescriptionId(ItemStack stack) {
+    @Environment(EnvType.CLIENT)
+    private boolean isClientAxe(ItemStack stack) {
         var headAttachment = WeaponStateHelper.getAttachmentItem(
                 CgsAttachmentTypes.HEAD,
                 new WeaponData(stack, Minecraft.getInstance().player)
@@ -39,9 +39,9 @@ public class HammerItem extends CgsGunItem {
 
         if (headAttachment instanceof HammerHeadItem item
                 && item.getHeadType() == HammerHeadItem.Type.AXE) {
-            return "item.cgs.axe";
+            return true;
         }
 
-        return super.getDescriptionId(stack);
+        return false;
     }
 }

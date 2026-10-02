@@ -6,14 +6,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.resources.Identifier;
+import com.nukateam.ntgl.platform.IPayloadContext;
 
 import static com.nukateam.cgs.common.utils.GunUtils.*;
 
 public record C2SMessageFuel() implements CustomPacketPayload{
     public static final Type<C2SMessageFuel> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(Gunsmithing.MOD_ID, "c2s_message_fuel"));
+            new Type<>(Identifier.fromNamespaceAndPath(Gunsmithing.MOD_ID, "c2s_message_fuel"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, C2SMessageFuel> CODEC = StreamCodec.of(
             (buffer, message) -> encode(message, buffer),

@@ -2,14 +2,13 @@ package com.nukateam.cgs.common.faundation.registry;
 
 import com.nukateam.cgs.Gunsmithing;
 import com.nukateam.cgs.common.faundation.entity.*;
-import com.nukateam.chassis_core.modules.example.common.entities.ExampleChassis;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.resources.ResourceKey;
+import com.nukateam.ntgl.platform.DeferredHolder;
+import com.nukateam.ntgl.platform.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 
 import java.util.function.BiFunction;
@@ -37,26 +36,25 @@ public class CgsProjectiles {
 
     private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerProjectile(
             String id, BiFunction<EntityType<T>, Level, T> function) {
-        return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+        return REGISTER.register(id, (ResourceKey<EntityType<?>> key) -> EntityType.Builder.<T>of(function::apply, MobCategory.MISC)
                 .sized(0.25F, 0.25F)
-                .setTrackingRange(100)
-                .setUpdateInterval(1)
+                .clientTrackingRange(100)
+                .updateInterval(1)
                 .noSummon()
                 .fireImmune()
-                .setShouldReceiveVelocityUpdates(true).build(id));
+                .build(key));
     }
     private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerFireball(
             String id, BiFunction<EntityType<T>, Level, T> function) {
-        return REGISTER.register(id, () -> EntityType.Builder.of(function::apply, MobCategory.MISC)
+        return REGISTER.register(id, (ResourceKey<EntityType<?>> key) -> EntityType.Builder.<T>of(function::apply, MobCategory.MISC)
                 .sized(4F, 4F)
-                .setTrackingRange(100)
-                .setUpdateInterval(1)
+                .clientTrackingRange(100)
+                .updateInterval(1)
                 .noSummon()
                 .fireImmune()
-                .setShouldReceiveVelocityUpdates(true).build(id));
+                .build(key));
     }
 
-    public static void register(IEventBus eventBus) {
-        REGISTER.register(eventBus);
+    public static void register() {
     }
 }

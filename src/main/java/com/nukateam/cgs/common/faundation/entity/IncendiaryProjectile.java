@@ -5,10 +5,10 @@ import com.nukateam.ntgl.common.foundation.entity.ProjectileEntity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
 
-import static software.bernie.geckolib.util.GeckoLibUtil.createInstanceCache;
+import static com.geckolib.util.GeckoLibUtil.createInstanceCache;
 
 public class IncendiaryProjectile extends ProjectileEntity {
     public IncendiaryProjectile(EntityType<? extends ProjectileEntity> entityType, Level level) {
@@ -21,7 +21,7 @@ public class IncendiaryProjectile extends ProjectileEntity {
 
     @Override
     protected void onProjectileTick() {
-        if (this.level().isClientSide && !isUnderWater()) {
+        if (this.level().isClientSide() && !isUnderWater()) {
             for (int i = 5; i > 0; i--) {
                 this.level().addParticle(ParticleTypes.FLAME, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
             }
