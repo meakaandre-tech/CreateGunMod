@@ -23,7 +23,7 @@ public class IncendiaryProjectile extends ProjectileEntity {
     protected void onProjectileTick() {
         if (this.level().isClientSide() && !isUnderWater()) {
             for (int i = 5; i > 0; i--) {
-                this.level().addParticle(ParticleTypes.FLAME, true, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
+                this.level().addParticle(ParticleTypes.FLAME, true, false, this.getX() - (this.getDeltaMovement().x() / i), this.getY() - (this.getDeltaMovement().y() / i), this.getZ() - (this.getDeltaMovement().z() / i), 0, 0, 0);
             }
         }
     }

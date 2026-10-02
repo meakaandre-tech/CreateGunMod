@@ -1,5 +1,7 @@
 package com.nukateam.cgs.client.animators;
 
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animatable.manager.AnimatableManager;
 import com.nukateam.cgs.common.faundation.registry.items.CgsAttachments;
 import com.nukateam.cgs.common.utils.GunUtils;
 import com.nukateam.example.common.util.constants.Animations;

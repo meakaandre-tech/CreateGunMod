@@ -1,7 +1,7 @@
 package com.nukateam.cgs.common.faundation.item;
 
 import com.nukateam.cgs.common.faundation.registry.items.CgsItems;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;

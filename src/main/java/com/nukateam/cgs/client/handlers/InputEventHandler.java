@@ -55,9 +55,9 @@ public class InputEventHandler {
 
     public static boolean isInGame() {
         var mc = Minecraft.getInstance();
-        if (mc.getOverlay() != null)
+        if (mc.gui.overlay() != null)
             return false;
-        if (mc.screen != null)
+        if (mc.gui.screen() != null)
             return false;
         if (!mc.mouseHandler.isMouseGrabbed())
             return false;

@@ -60,7 +60,7 @@ public class GuanoAccumulationHandler {
         for (int i = 1; i <= 5; i++) {
             BlockPos checkPos = batPos.below(i);
             BlockState state = level.getBlockState(checkPos);
-            if (state.isSolidRender(level, checkPos) &&
+            if (state.isSolidRender() &&
                     Block.isFaceFull(state.getCollisionShape(level, checkPos), Direction.UP)) {
                 return checkPos.above();
             }

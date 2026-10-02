@@ -200,7 +200,7 @@ public class AttachmentMods {
             if(name.equals(SoundType.FIRE.getName())
                     && data.weapon != null
                     && data.weapon.getItem() == CgsWeapons.NAILGUN.get()) {
-                return CgsSounds.NAILGUN_FIRE_STEAM.get().getLocation();
+                return CgsSounds.NAILGUN_FIRE_STEAM.get().location();
             }
             return IWeaponModifier.super.modifySound(name, sound, data);
         }
@@ -217,7 +217,7 @@ public class AttachmentMods {
             if(data.wielder != null && data.weapon != null) {
                 var magazineItem = WeaponStateHelper.getAttachmentItem(AttachmentType.MAGAZINE, data).getItem();
                 var drumItem = CgsAttachments.GATLING_DRUM.get();
-                var hasStrengthEffect = data.wielder.hasEffect(MobEffects.DAMAGE_BOOST);
+                var hasStrengthEffect = data.wielder.hasEffect(MobEffects.STRENGTH);
                 return magazineItem != drumItem && FuelUtils.hasFuel(data) && hasStrengthEffect;
             }
             return false;

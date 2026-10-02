@@ -151,11 +151,11 @@ public class MeleeHandler {
 
     public static boolean isToolTierSufficient(BlockState blockState, ToolMaterial toolTier) {
         if (blockState.is(BlockTags.NEEDS_DIAMOND_TOOL)) {
-            return toolToolMaterial == ToolMaterial.DIAMOND;
+            return toolTier == ToolMaterial.DIAMOND;
         } else if (blockState.is(BlockTags.NEEDS_IRON_TOOL)) {
-            return toolToolMaterial == ToolMaterial.IRON || toolToolMaterial == ToolMaterial.DIAMOND;
+            return toolTier == ToolMaterial.IRON || toolTier == ToolMaterial.DIAMOND;
         } else if (blockState.is(BlockTags.NEEDS_STONE_TOOL)) {
-            return toolToolMaterial == ToolMaterial.STONE ||toolToolMaterial == ToolMaterial.IRON || toolToolMaterial == ToolMaterial.DIAMOND;
+            return toolTier == ToolMaterial.STONE ||toolTier == ToolMaterial.IRON || toolTier == ToolMaterial.DIAMOND;
         }
 
         return true;

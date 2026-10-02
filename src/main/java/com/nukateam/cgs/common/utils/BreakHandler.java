@@ -2,7 +2,6 @@ package com.nukateam.cgs.common.utils;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ToolMaterial;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.BiPredicate;

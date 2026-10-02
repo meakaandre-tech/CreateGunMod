@@ -1,5 +1,7 @@
 package com.nukateam.cgs.client.animators;
 
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animatable.manager.AnimatableManager;
 import com.nukateam.cgs.common.faundation.registry.items.CgsAttachments;
 import com.nukateam.cgs.common.ntgl.CgsAttachmentTypes;
 import com.nukateam.geo.render.DynamicGeoItemRenderer;
@@ -101,7 +103,7 @@ public class GatlingAnimator extends EngineAnimator {
     }
 
     private boolean hasAnimationPlaying(AnimationController<WeaponAnimator> controller, String name) {
-        var animation = controller.getCurrentAnimation();
+        var animation = controller.getCurrentAnimationPoint();
         return animation != null && animation.animation().name().equals(name);
     }
 }

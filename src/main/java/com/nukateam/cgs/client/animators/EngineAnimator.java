@@ -1,5 +1,7 @@
 package com.nukateam.cgs.client.animators;
 
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animatable.manager.AnimatableManager;
 import com.nukateam.cgs.common.ntgl.CgsAttachmentTypes;
 import com.nukateam.geo.render.DynamicGeoItemRenderer;
 import com.nukateam.ntgl.client.animators.WeaponAnimator;
@@ -83,7 +85,7 @@ public abstract class EngineAnimator extends WeaponAnimator {
         if (shouldPlayEngineSound()) {
             var player = minecraft.player;
             var isShooting = shootingHandler.isShooting(getEntity(), getArm());
-            var pitch = 1.18f - minecraft.level.random.nextFloat() * .25f;
+            var pitch = 1.18f - minecraft.level.getRandom().nextFloat() * .25f;
             var volume = isShooting ? 6f : 0.5f;
 
             assert player != null;

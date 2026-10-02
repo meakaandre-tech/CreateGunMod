@@ -1,6 +1,6 @@
 package com.nukateam.cgs.client.renderers.weapon;
 
-import com.geckolib.animation.state.BoneSnapshots;
+import com.geckolib.renderer.base.BoneSnapshots;
 import com.geckolib.cache.model.GeoBone;
 import com.geckolib.renderer.base.GeoRenderState;
 import com.geckolib.renderer.base.RenderPassInfo;
