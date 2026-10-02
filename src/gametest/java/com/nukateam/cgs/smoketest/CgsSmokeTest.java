@@ -158,10 +158,16 @@ public class CgsSmokeTest implements FabricClientGameTest {
             });
 
             step("hammer breaks blocks", () -> {
-                for (var head : new String[]{"hammer_iron", "axe_iron"}) {
+                String[][] heads = {{"hammer_iron"}, {"hammer_iron", "hammer_chamber"}, {"axe_iron"}};
+                for (var setup : heads) {
+                    var head = String.join("+", setup);
                     arena(context, server);
                     hold(context, server, "hammer");
-                    attach(server, head, "hammer_chamber");
+                    attach(server, setup);
+                    context.waitTicks(10);
+                    context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
+                    context.waitTicks(120);
+                    context.runOnClient(mc -> logState(mc, head + ": after reload"));
                     var block = head.startsWith("axe") ? "minecraft:oak_log" : "minecraft:stone";
                     at(server, "fill {x-1} 150 {z+2} {x+1} 152 {z+2} " + block);
                     context.waitTicks(10);
@@ -247,6 +253,29 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.takeScreenshot("25_ballistazooka_after");
                 log("ballistazooka: entities seen " + seen);
                 logLiving(server, "ballistazooka");
+            });
+
+            step("projectiles in flight", () -> {
+                String[][] setups = {{"launcher"}, {"launcher", "ballistazooka"}, {"nailgun"}, {"gatling"}, {"blazegun"}};
+                for (var setup : setups) {
+                    var name = String.join("+", setup);
+                    arena(context, server);
+                    hold(context, server, setup[0]);
+                    attach(server, java.util.Arrays.copyOfRange(setup, 1, setup.length));
+                    at(server, "tp @a {x+0.5} 150 {z+0.5} 0 -50");
+                    context.waitTicks(10);
+                    context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
+                    context.waitTicks(200);
+                    context.getInput().holdMouse(0);
+                    var seen = new TreeSet<String>();
+                    seen.addAll(watchEntities(context, 3));
+                    context.takeScreenshot("26_flight_" + name + "_0");
+                    seen.addAll(watchEntities(context, 3));
+                    context.takeScreenshot("26_flight_" + name + "_1");
+                    context.getInput().releaseMouse(0);
+                    seen.addAll(watchEntities(context, 20));
+                    log("flight " + name + ": entities seen " + seen);
+                }
             });
 
             step("third person", () -> {
