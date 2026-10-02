@@ -38,7 +38,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
             server.runCommand("gamemode creative @a");
             server.runCommand("time set noon");
             server.runCommand("weather clear");
-            server.runCommand("execute at @p run fill ^-4 ^-1 ^9 ^4 ^5 ^9 minecraft:smooth_stone");
+            arena(context, server);
 
             step("models", () -> context.runOnClient(mc -> {
                 log("animation ids: " + com.geckolib.cache.GeckoLibResources.getBakedAnimations().cache().keySet().stream()
@@ -49,6 +49,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
 
             for (var weapon : WEAPONS) {
                 step(weapon, () -> {
+                    arena(context, server);
                     hold(context, server, weapon);
                     context.waitTicks(25);
                     context.takeScreenshot("10_" + weapon + "_1_first_person");
@@ -58,7 +59,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.waitTicks(20);
                     context.takeScreenshot("10_" + weapon + "_2_reloading");
                     context.waitTicks(100);
-                    server.runCommand("execute at @p run summon minecraft:zombie ^ ^ ^4 {NoAI:1b,PersistenceRequired:1b}");
+                    at(server, "summon minecraft:zombie {x+0.5} 150 {z+4.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                     context.waitTicks(5);
                     context.runOnClient(mc -> logState(mc, weapon + ": before attack"));
                     context.getInput().holdMouse(0);
@@ -78,28 +79,29 @@ public class CgsSmokeTest implements FabricClientGameTest {
             }
 
             step("survival ammo", () -> {
+                arena(context, server);
                 hold(context, server, "revolver");
                 server.runCommand("gamemode survival @a");
                 server.runCommand("give @a cgs:round_revolver 20");
                 context.waitTicks(10);
-                context.runOnClient(mc -> logState(mc, "survival: before reload"));
+                context.runOnClient(mc -> logState(mc, "survival: before reload, rounds " + rounds(mc)));
                 context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
-                context.waitTicks(200);
-                context.runOnClient(mc -> logState(mc, "survival: after reload, rounds left "
-                        + mc.player.getInventory().countItem(mc.player.getInventory().getItem(1).getItem())));
+                context.waitTicks(420);
+                context.runOnClient(mc -> logState(mc, "survival: after reload, rounds " + rounds(mc)));
                 for (int i = 0; i < 3; i++) {
                     context.getInput().holdMouse(0);
                     context.waitTicks(3);
                     context.getInput().releaseMouse(0);
                     context.waitTicks(15);
                 }
-                context.runOnClient(mc -> logState(mc, "survival: after three shots"));
+                context.runOnClient(mc -> logState(mc, "survival: after three shots, rounds " + rounds(mc)));
                 server.runCommand("gamemode creative @a");
                 server.runCommand("clear @a cgs:round_revolver");
                 context.waitTicks(5);
             });
 
             step("aim", () -> {
+                arena(context, server);
                 hold(context, server, "revolver");
                 context.waitTicks(20);
                 context.getInput().holdMouse(1);
@@ -110,10 +112,13 @@ public class CgsSmokeTest implements FabricClientGameTest {
             });
 
             step("fuel", () -> {
+                arena(context, server);
                 hold(context, server, "blazegun");
+                attachEngine(server);
                 server.runCommand("item replace entity @a weapon.offhand with minecraft:water_bucket");
                 server.runCommand("gamemode survival @a");
                 context.waitTicks(10);
+                context.takeScreenshot("21_blazegun_with_engine");
                 context.runOnClient(mc -> log("fuel: water before " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
                 context.getInput().holdMouse(1);
@@ -130,6 +135,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
 
             step("third person", () -> {
                 for (var weapon : new String[]{"revolver", "gatling", "hammer"}) {
+                    arena(context, server);
                     hold(context, server, weapon);
                     // the arm pose of the weapon is only applied once the walk animation has started
                     context.getInput().holdKeyFor(options -> options.keyUp, 4);
@@ -146,7 +152,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
             });
 
             step("inventory", () -> {
+                arena(context, server);
                 server.runCommand("clear @a");
+                server.runCommand("gamemode survival @a");
                 for (var item : new String[]{"revolver", "flintlock", "shotgun", "nailgun", "gatling", "blazegun", "launcher", "hammer", "frag_grenade",
                         "scope", "stock", "bayonet", "steam_engine", "gatling_drum", "hammer_iron", "axe_diamond", "ballistazooka", "round_belt",
                         "round_revolver", "round_shotgun", "round_gatling", "paper_cartridge", "nail", "rocket", "spear", "lead_balls",
@@ -158,6 +166,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.waitTicks(10);
                 context.takeScreenshot("40_inventory");
                 context.getInput().pressKey(GLFW.GLFW_KEY_ESCAPE);
+                server.runCommand("gamemode creative @a");
                 context.waitTicks(5);
             });
 
@@ -170,15 +179,16 @@ public class CgsSmokeTest implements FabricClientGameTest {
             });
 
             step("blocks and dropped items", () -> {
-                server.runCommand("execute at @p run setblock ^-2 ^ ^3 cgs:lead_ore");
-                server.runCommand("execute at @p run setblock ^-1 ^ ^3 cgs:deepslate_lead_ore");
-                server.runCommand("execute at @p run setblock ^0 ^ ^3 cgs:sulfur_ore");
-                server.runCommand("execute at @p run setblock ^1 ^ ^3 cgs:raw_lead_block");
-                server.runCommand("execute at @p run setblock ^2 ^ ^3 cgs:lead_block");
-                server.runCommand("execute at @p run setblock ^-2 ^1 ^3 cgs:steel_block");
-                server.runCommand("execute at @p run setblock ^-1 ^1 ^3 cgs:guano_block[layers=3]");
-                server.runCommand("execute at @p run summon item ^1 ^2 ^3 {Item:{id:\"cgs:gatling\",count:1},NoGravity:1b}");
-                server.runCommand("execute at @p run summon item ^0 ^2 ^3 {Item:{id:\"cgs:revolver\",count:1},NoGravity:1b}");
+                arena(context, server);
+                at(server, "setblock {x-2} 150 {z+3} cgs:lead_ore");
+                at(server, "setblock {x-1} 150 {z+3} cgs:deepslate_lead_ore");
+                at(server, "setblock {x+0} 150 {z+3} cgs:sulfur_ore");
+                at(server, "setblock {x+1} 150 {z+3} cgs:raw_lead_block");
+                at(server, "setblock {x+2} 150 {z+3} cgs:lead_block");
+                at(server, "setblock {x-2} 151 {z+3} cgs:steel_block");
+                at(server, "setblock {x-1} 151 {z+3} cgs:guano_block[layers=3]");
+                at(server, "summon item {x+1.5} 152 {z+3.5} {Item:{id:\"cgs:gatling\",count:1},NoGravity:1b}");
+                at(server, "summon item {x+0.5} 152 {z+3.5} {Item:{id:\"cgs:revolver\",count:1},NoGravity:1b}");
                 context.waitTicks(20);
                 context.takeScreenshot("42_blocks_and_dropped_items");
             });
@@ -187,17 +197,19 @@ public class CgsSmokeTest implements FabricClientGameTest {
         // Second pass against a real dedicated server: unlike singleplayer, every packet is encoded and decoded.
         try (var dedicated = context.worldBuilder().createServer(); var connection = dedicated.connect()) {
             connection.waitForChunksRender();
+            hasBase = false;
             dedicated.runCommand("gamemode creative @a");
             dedicated.runCommand("time set noon");
-            dedicated.runCommand("execute at @p run fill ^-4 ^-1 ^9 ^4 ^5 ^9 minecraft:smooth_stone");
+            arena(context, dedicated);
 
             for (var weapon : new String[]{"revolver", "launcher", "blazegun"}) {
                 step("dedicated " + weapon, () -> {
+                    arena(context, dedicated);
                     hold(context, dedicated, weapon);
                     context.waitTicks(20);
                     context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
                     context.waitTicks(100);
-                    dedicated.runCommand("execute at @p run summon minecraft:zombie ^ ^ ^4 {NoAI:1b,PersistenceRequired:1b}");
+                    at(dedicated, "summon minecraft:zombie {x+0.5} 150 {z+4.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                     context.waitTicks(10);
                     context.getInput().holdMouse(0);
                     var seen = watchEntities(context, 30);
@@ -213,7 +225,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
             }
 
             step("dedicated fuel", () -> {
+                arena(context, dedicated);
                 hold(context, dedicated, "blazegun");
+                attachEngine(dedicated);
                 dedicated.runCommand("item replace entity @a weapon.offhand with minecraft:water_bucket");
                 dedicated.runCommand("gamemode survival @a");
                 context.waitTicks(10);
@@ -225,6 +239,52 @@ public class CgsSmokeTest implements FabricClientGameTest {
                         + " offhand " + mc.player.getOffhandItem()));
             });
         }
+    }
+
+    private static int baseX, baseZ;
+    private static boolean hasBase;
+
+    /** Runs a command with x/z coordinates relative to the arena: "{x+N}" and "{z+N}" are replaced. */
+    private static void at(TestServerContext server, String command) {
+        var matcher = java.util.regex.Pattern.compile("\\{([xz])([+-][0-9.]+)\\}").matcher(command);
+        var result = new StringBuilder();
+        while (matcher.find()) {
+            var value = (matcher.group(1).equals("x") ? baseX : baseZ) + Double.parseDouble(matcher.group(2));
+            matcher.appendReplacement(result, value == Math.rint(value) ? String.valueOf((long) value) : String.valueOf(value));
+        }
+        matcher.appendTail(result);
+        server.runCommand(result.toString());
+    }
+
+    /** A platform high above the ground with a wall to shoot at; rebuilt before every step, the player looks at the wall. */
+    private static void arena(ClientGameTestContext context, TestServerContext server) {
+        if (!hasBase) {
+            server.runOnServer(minecraftServer -> {
+                var position = minecraftServer.getPlayerList().getPlayers().getFirst().blockPosition();
+                baseX = position.getX();
+                baseZ = position.getZ();
+            });
+            hasBase = true;
+        }
+        server.runCommand("kill @e[type=!minecraft:player]");
+        at(server, "fill {x-7} 149 {z-3} {x+7} 149 {z+13} minecraft:stone");
+        at(server, "fill {x-7} 150 {z-3} {x+7} 156 {z+13} minecraft:air");
+        at(server, "fill {x-5} 150 {z+10} {x+5} 156 {z+10} minecraft:smooth_stone");
+        at(server, "tp @a {x+0.5} 150 {z+0.5} 0 0");
+        context.waitTicks(5);
+    }
+
+    private static void attachEngine(TestServerContext server) {
+        server.runOnServer(minecraftServer -> {
+            var player = minecraftServer.getPlayerList().getPlayers().getFirst();
+            var stack = player.getMainHandItem();
+            WeaponStateHelper.writeAttachments(java.util.List.of(new net.minecraft.world.item.ItemStack(
+                    com.nukateam.cgs.common.faundation.registry.items.CgsAttachments.STEAM_ENGINE.get())), new WeaponData(stack, player));
+        });
+    }
+
+    private static int rounds(Minecraft mc) {
+        return mc.player.getInventory().countItem(com.nukateam.cgs.common.faundation.registry.items.CgsAmmo.REVOLVER_ROUND.get());
     }
 
     private static void logLiving(TestServerContext server, String when) {

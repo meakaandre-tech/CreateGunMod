@@ -53,8 +53,11 @@ public class CgsServerGameTest {
             helper.runAfterDelay(tick, () -> {
                 zombie.setHealth(zombie.getMaxHealth());
                 var stack = new ItemStack(weapon);
+                player.getInventory().clearContent();
                 player.setItemInHand(InteractionHand.MAIN_HAND, stack);
-                WeaponStateHelper.setAmmoCount(new WeaponData(stack, player), 10);
+                // the inventory tick picks the ammo type of a new weapon; then load one round
+                player.doTick();
+                WeaponStateHelper.setAmmoCount(new WeaponData(player.getMainHandItem(), player), 1);
                 seen.clear();
                 log(weapon + ": before shooting ammo " + ammo(player));
                 ServerPlayHandler.handleShoot(new C2SMessageShoot(player.getId(), 0F, 0F, 0F, 0F, InteractionHand.MAIN_HAND, WeaponMode.PRIMARY), player);
@@ -69,8 +72,9 @@ public class CgsServerGameTest {
 
         helper.runAfterDelay(tick, () -> {
             var revolver = new ItemStack(CgsWeapons.REVOLVER.get());
+            player.getInventory().clearContent();
             player.setItemInHand(InteractionHand.MAIN_HAND, revolver);
-            WeaponStateHelper.setAmmoCount(new WeaponData(revolver, player), 0);
+            player.doTick();
             player.getInventory().add(new ItemStack(CgsAmmo.REVOLVER_ROUND.get(), 10));
             log("before reloading: ammo " + ammo(player) + " rounds in inventory " + player.getInventory().countItem(CgsAmmo.REVOLVER_ROUND.get()));
             ServerPlayHandler.handleReload(new C2SMessageReload(InteractionHand.MAIN_HAND, WeaponMode.PRIMARY), player);

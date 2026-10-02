@@ -93,6 +93,6 @@
     }
   },
   "textures": {
-    "particle": "launcher"
+    "particle": "cgs:item/steel_ingot"
   }
 }

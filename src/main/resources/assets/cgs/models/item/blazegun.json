@@ -81,5 +81,8 @@
         0
       ]
     }
+  },
+  "textures": {
+    "particle": "cgs:item/steel_ingot"
   }
 }

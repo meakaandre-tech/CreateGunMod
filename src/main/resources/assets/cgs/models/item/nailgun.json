@@ -101,5 +101,8 @@
         0.9140668750000001
       ]
     }
+  },
+  "textures": {
+    "particle": "cgs:item/steel_ingot"
   }
 }

@@ -81,5 +81,8 @@
         2.73828
       ]
     }
+  },
+  "textures": {
+    "particle": "cgs:item/steel_ingot"
   }
 }
