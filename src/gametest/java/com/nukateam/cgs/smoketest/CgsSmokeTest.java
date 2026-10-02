@@ -291,7 +291,20 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
                     context.waitTicks(200);
                     context.getInput().holdMouse(0);
-                    context.waitTicks(setup[0].equals("nailgun") ? 4 : 9);
+                    var found = new boolean[1];
+                    for (int i = 0; i < 14 && !found[0]; i++) {
+                        context.waitTick();
+                        int tick = i;
+                        context.runOnClient(mc -> {
+                            for (var entity : mc.level.entitiesForRendering())
+                                if (!(entity instanceof net.minecraft.world.entity.player.Player)) {
+                                    log("flying " + name + " tick " + tick + ": " + entity.getType().toShortString() + " age " + entity.tickCount
+                                            + " distance " + entity.distanceTo(mc.player));
+                                    if (entity.tickCount >= 3)
+                                        found[0] = true;
+                                }
+                        });
+                    }
                     server.runCommand("tick freeze");
                     context.getInput().releaseMouse(0);
                     context.waitTicks(2);
