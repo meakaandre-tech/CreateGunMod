@@ -157,6 +157,35 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.waitTicks(5);
             });
 
+            step("hammer breaks blocks", () -> {
+                for (var head : new String[]{"hammer_iron", "axe_iron"}) {
+                    arena(context, server);
+                    hold(context, server, "hammer");
+                    attach(server, head, "hammer_chamber");
+                    var block = head.startsWith("axe") ? "minecraft:oak_log" : "minecraft:stone";
+                    at(server, "fill {x-1} 150 {z+2} {x+1} 152 {z+2} " + block);
+                    context.waitTicks(10);
+                    context.getInput().holdMouse(1);
+                    context.waitTicks(15);
+                    context.getInput().releaseMouse(1);
+                    context.waitTicks(30);
+                    context.takeScreenshot("22_" + head + "_blocks");
+                    server.runOnServer(minecraftServer -> {
+                        var level = minecraftServer.getPlayerList().getPlayers().getFirst().level();
+                        int left = 0;
+                        for (int x = -1; x <= 1; x++)
+                            for (int y = 150; y <= 152; y++)
+                                if (!level.getBlockState(new net.minecraft.core.BlockPos(baseX + x, y, baseZ + 2)).isAir())
+                                    left++;
+                        var drops = new TreeSet<String>();
+                        for (var entity : level.getAllEntities())
+                            if (entity instanceof net.minecraft.world.entity.item.ItemEntity item)
+                                drops.add(item.getItem().toString());
+                        log(head + ": blocks left of 9: " + left + " drops " + drops);
+                    });
+                }
+            });
+
             step("mechanical press recipe", () -> {
                 arena(context, server);
                 at(server, "setblock {x+0} 150 {z+3} create:depot");
@@ -203,7 +232,8 @@ public class CgsSmokeTest implements FabricClientGameTest {
 
                 // the ballistazooka shoots spears (a GeckoLib entity)
                 context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
-                context.waitTicks(100);
+                context.waitTicks(200);
+                context.runOnClient(mc -> logState(mc, "ballistazooka: after reload"));
                 at(server, "summon minecraft:zombie {x+0.5} 150 {z+8.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                 context.waitTicks(5);
                 context.getInput().holdMouse(0);
