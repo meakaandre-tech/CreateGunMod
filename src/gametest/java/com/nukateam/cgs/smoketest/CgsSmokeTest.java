@@ -114,7 +114,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
             step("fuel", () -> {
                 arena(context, server);
                 hold(context, server, "blazegun");
-                attachEngine(server);
+                attach(server, "steam_engine");
                 server.runCommand("item replace entity @a weapon.offhand with minecraft:water_bucket");
                 server.runCommand("gamemode survival @a");
                 context.waitTicks(10);
@@ -160,7 +160,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
             step("mechanical press recipe", () -> {
                 arena(context, server);
                 at(server, "setblock {x+0} 150 {z+3} create:depot");
-                at(server, "setblock {x+0} 152 {z+3} create:mechanical_press[horizontal_facing=east]");
+                at(server, "setblock {x+0} 152 {z+3} create:mechanical_press[facing=east]");
                 at(server, "setblock {x-1} 152 {z+3} create:creative_motor[facing=east]");
                 at(server, "summon item {x+0.5} 151.5 {z+3.5} {Item:{id:\"cgs:steel_ingot\",count:1}}");
                 context.waitTicks(300);
@@ -174,6 +174,49 @@ public class CgsSmokeTest implements FabricClientGameTest {
                                 + (blockEntity == null ? null : blockEntity.saveWithoutMetadata(level.registryAccess())));
                     }
                 });
+            });
+
+            step("attachments", () -> {
+                String[][] setups = {
+                        {"flintlock", "scope", "flintlock_chambers", "flintlock_long_barrel", "stock"},
+                        {"hammer", "hammer_iron", "hammer_chamber"},
+                        {"hammer", "axe_diamond"},
+                        {"gatling", "steam_engine", "gatling_drum"},
+                        {"shotgun", "shotgun_drum", "shotgun_long_barrel"},
+                        {"launcher", "ballistazooka"}};
+                int index = 0;
+                for (var setup : setups) {
+                    arena(context, server);
+                    hold(context, server, setup[0]);
+                    attach(server, java.util.Arrays.copyOfRange(setup, 1, setup.length));
+                    context.waitTicks(25);
+                    context.runOnClient(mc -> log("attachments: " + mc.player.getMainHandItem().getHoverName().getString()
+                            + " " + WeaponStateHelper.getAttachments(mc.player.getMainHandItem())));
+                    context.takeScreenshot("24_attachments_" + index + "_" + setup[0]);
+                    context.runOnClient(mc -> mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT));
+                    context.waitTicks(10);
+                    context.takeScreenshot("24_attachments_" + index + "_" + setup[0] + "_third_person");
+                    context.runOnClient(mc -> mc.options.setCameraType(CameraType.FIRST_PERSON));
+                    context.waitTicks(5);
+                    index++;
+                }
+
+                // the ballistazooka shoots spears (a GeckoLib entity)
+                context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
+                context.waitTicks(100);
+                at(server, "summon minecraft:zombie {x+0.5} 150 {z+8.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
+                context.waitTicks(5);
+                context.getInput().holdMouse(0);
+                var seen = new TreeSet<String>();
+                for (int i = 0; i < 6; i++) {
+                    seen.addAll(watchEntities(context, 1));
+                    context.takeScreenshot("25_ballistazooka_shot_" + i);
+                }
+                context.getInput().releaseMouse(0);
+                seen.addAll(watchEntities(context, 40));
+                context.takeScreenshot("25_ballistazooka_after");
+                log("ballistazooka: entities seen " + seen);
+                logLiving(server, "ballistazooka");
             });
 
             step("third person", () -> {
@@ -270,7 +313,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
             step("dedicated fuel", () -> {
                 arena(context, dedicated);
                 hold(context, dedicated, "blazegun");
-                attachEngine(dedicated);
+                attach(dedicated, "steam_engine");
                 dedicated.runCommand("item replace entity @a weapon.offhand with minecraft:water_bucket");
                 dedicated.runCommand("gamemode survival @a");
                 context.waitTicks(10);
@@ -317,12 +360,15 @@ public class CgsSmokeTest implements FabricClientGameTest {
         context.waitTicks(5);
     }
 
-    private static void attachEngine(TestServerContext server) {
+    private static void attach(TestServerContext server, String... attachments) {
         server.runOnServer(minecraftServer -> {
             var player = minecraftServer.getPlayerList().getPlayers().getFirst();
             var stack = player.getMainHandItem();
-            WeaponStateHelper.writeAttachments(java.util.List.of(new net.minecraft.world.item.ItemStack(
-                    com.nukateam.cgs.common.faundation.registry.items.CgsAttachments.STEAM_ENGINE.get())), new WeaponData(stack, player));
+            var items = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
+            for (var attachment : attachments)
+                items.add(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getValue(Gunsmithing.cgsResource(attachment))));
+            WeaponStateHelper.writeAttachments(items, new WeaponData(stack, player));
         });
     }
 
