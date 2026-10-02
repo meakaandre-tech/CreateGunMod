@@ -1,7 +1,5 @@
 package com.nukateam.cgs.common.faundation.entity;
 
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.block.BaseFireBlock;
 import com.nukateam.cgs.common.ntgl.CgsAmmoHolders;
@@ -67,15 +65,15 @@ public class BlazeProjectile extends ProjectileEntity implements ItemSupplier, A
     }
 
     @Override
-    public void addAdditionalSaveData(ValueOutput compound) {
-        super.addAdditionalSaveData(compound);
+    protected void saveNbt(CompoundTag compound) {
+        super.saveNbt(compound);
         compound.putBoolean("isSuperHeated", this.isSuperHeated);
         compound.putBoolean("isStrong", this.isStrong);
     }
 
     @Override
-    public void readAdditionalSaveData(ValueInput compound) {
-        super.readAdditionalSaveData(compound);
+    protected void loadNbt(CompoundTag compound) {
+        super.loadNbt(compound);
         this.isSuperHeated = compound.getBooleanOr("isSuperHeated", false);
         this.isStrong = compound.getBooleanOr("isStrong", false);
     }
