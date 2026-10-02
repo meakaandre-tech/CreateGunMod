@@ -1,29 +1,13 @@
 {
   "type": "create:mechanical_crafting",
-  "accept_mirrored": false,
-  "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:blast_furnace"
-    },
-    "E": {
-      "item": "create:steam_engine"
-    },
-    "F": {
-      "item": "create:flywheel"
-    },
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "M": {
-      "item": "create:precision_mechanism"
-    },
-    "P": {
-      "item": "create:fluid_pipe"
-    },
-    "T": {
-      "item": "create:fluid_tank"
-    }
+    "B": "minecraft:blast_furnace",
+    "E": "create:steam_engine",
+    "F": "create:flywheel",
+    "L": "#c:plates/brass",
+    "M": "create:precision_mechanism",
+    "P": "create:fluid_pipe",
+    "T": "create:fluid_tank"
   },
   "pattern": [
     " MP ",
@@ -31,8 +15,6 @@
     " LBL"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:steam_engine"
-  },
-  "show_notification": false
+  }
 }

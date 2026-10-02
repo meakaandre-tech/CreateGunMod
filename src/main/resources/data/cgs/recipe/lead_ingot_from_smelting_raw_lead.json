@@ -1,14 +1,11 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
+  "group": "lead",
   "cookingtime": 200,
   "experience": 0.25,
-  "group": "lead",
-  "ingredient": {
-    "item": "cgs:raw_lead"
-  },
+  "ingredient": "cgs:raw_lead",
   "result": {
-    "count": 1,
     "id": "cgs:lead_ingot"
   }
 }

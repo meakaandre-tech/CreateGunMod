@@ -1,23 +1,11 @@
 {
   "type": "create:mechanical_crafting",
-  "accept_mirrored": false,
-  "category": "misc",
   "key": {
-    "A": {
-      "item": "create:andesite_alloy"
-    },
-    "L": {
-      "tag": "c:storage_blocks/brass"
-    },
-    "P": {
-      "item": "create:mechanical_piston"
-    },
-    "T": {
-      "item": "create:copper_backtank"
-    },
-    "W": {
-      "tag": "c:stripped_logs"
-    }
+    "A": "create:andesite_alloy",
+    "L": "#c:storage_blocks/brass",
+    "P": "create:mechanical_piston",
+    "T": "create:copper_backtank",
+    "W": "#c:stripped_logs"
   },
   "pattern": [
     "PLT",
@@ -26,8 +14,6 @@
     " A "
   ],
   "result": {
-    "count": 1,
     "id": "cgs:hammer"
-  },
-  "show_notification": false
+  }
 }

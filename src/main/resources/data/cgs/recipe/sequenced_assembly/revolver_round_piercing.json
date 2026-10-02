@@ -1,48 +1,28 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "cgs:round_revolver_blank"
+  "ingredient": "cgs:round_revolver_blank",
+  "transitional_item": {
+    "id": "cgs:round_revolver_blank"
   },
-  "results": [
-    {
-      "id": "cgs:round_revolver_piercing"
-    }
-  ],
+  "result": {
+    "id": "cgs:round_revolver_piercing"
+  },
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:round_revolver_blank"
-        },
-        {
-          "tag": "c:nuggets/steel"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:nuggets/steel",
       "results": [
-        {
-          "id": "cgs:round_revolver_blank"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:round_revolver_blank"
-        },
-        {
-          "tag": "c:nuggets/lead"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:nuggets/lead",
       "results": [
-        {
-          "id": "cgs:round_revolver_blank"
-        }
+        "$result"
       ]
     }
-  ],
-  "transitional_item": {
-    "id": "cgs:round_revolver_blank"
-  }
+  ]
 }

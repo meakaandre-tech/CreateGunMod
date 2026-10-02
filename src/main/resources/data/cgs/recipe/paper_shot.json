@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "cgs:lead_balls"
-    },
-    {
-      "tag": "c:gunpowders"
-    },
-    {
-      "item": "minecraft:paper"
-    }
+    "cgs:lead_balls",
+    "#c:gunpowders",
+    "minecraft:paper"
   ],
   "result": {
     "count": 2,

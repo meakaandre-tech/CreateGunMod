@@ -1,32 +1,10 @@
 {
-  "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "cgs:round_revolver_blank"
-  },
+  "type": "create:deploying",
+  "target": "cgs:round_revolver_blank",
+  "ingredient": "#c:nuggets/lead",
   "results": [
     {
       "id": "cgs:round_revolver"
     }
-  ],
-  "sequence": [
-    {
-      "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:round_revolver_blank"
-        },
-        {
-          "tag": "c:nuggets/lead"
-        }
-      ],
-      "results": [
-        {
-          "id": "cgs:round_revolver_blank"
-        }
-      ]
-    }
-  ],
-  "transitional_item": {
-    "id": "cgs:round_revolver_blank"
-  }
+  ]
 }

@@ -6,6 +6,12 @@
   "description": "Game tests used by CI to check that the mod starts, renders and shoots. Not part of the released jar.",
   "environment": "*",
   "entrypoints": {
+    "fabric-client-gametest": [
+      "com.nukateam.cgs.smoketest.CgsSmokeTest"
+    ],
+    "fabric-gametest": [
+      "com.nukateam.cgs.smoketest.CgsServerGameTest"
+    ]
   },
   "depends": {
     "cgs": "*"

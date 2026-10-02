@@ -1,48 +1,28 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "cgs:round_gatling_blank"
+  "ingredient": "cgs:round_gatling_blank",
+  "transitional_item": {
+    "id": "cgs:round_gatling_blank"
   },
-  "results": [
-    {
-      "id": "cgs:round_gatling_piercing"
-    }
-  ],
+  "result": {
+    "id": "cgs:round_gatling_piercing"
+  },
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:round_gatling_blank"
-        },
-        {
-          "tag": "c:nuggets/steel"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:nuggets/steel",
       "results": [
-        {
-          "id": "cgs:round_gatling_blank"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:round_gatling_blank"
-        },
-        {
-          "tag": "c:nuggets/copper"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:nuggets/copper",
       "results": [
-        {
-          "id": "cgs:round_gatling_blank"
-        }
+        "$result"
       ]
     }
-  ],
-  "transitional_item": {
-    "id": "cgs:round_gatling_blank"
-  }
+  ]
 }

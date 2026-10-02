@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "cgs:axe_diamond"
-  },
+  "template": "minecraft:netherite_upgrade_smithing_template",
+  "base": "cgs:axe_diamond",
+  "addition": "minecraft:netherite_ingot",
   "result": {
-    "count": 1,
     "id": "cgs:axe_netherite"
-  },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

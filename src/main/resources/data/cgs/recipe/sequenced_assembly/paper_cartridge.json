@@ -1,49 +1,29 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "minecraft:paper"
+  "ingredient": "minecraft:paper",
+  "transitional_item": {
+    "id": "minecraft:paper"
   },
-  "results": [
-    {
-      "count": 4,
-      "id": "cgs:paper_cartridge"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "cgs:paper_cartridge"
+  },
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "minecraft:paper"
-        },
-        {
-          "tag": "c:gunpowders"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:gunpowders",
       "results": [
-        {
-          "id": "minecraft:paper"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "minecraft:paper"
-        },
-        {
-          "tag": "c:nuggets/lead"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:nuggets/lead",
       "results": [
-        {
-          "id": "minecraft:paper"
-        }
+        "$result"
       ]
     }
-  ],
-  "transitional_item": {
-    "id": "minecraft:paper"
-  }
+  ]
 }

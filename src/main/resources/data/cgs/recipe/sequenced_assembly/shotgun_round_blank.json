@@ -1,66 +1,38 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "tag": "c:plates/brass"
+  "ingredient": "#c:plates/brass",
+  "transitional_item": {
+    "id": "cgs:shell_shotgun"
   },
-  "results": [
-    {
-      "count": 4,
-      "id": "cgs:round_shotgun_blank"
-    }
-  ],
+  "result": {
+    "count": 4,
+    "id": "cgs:round_shotgun_blank"
+  },
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:shell_shotgun"
-        },
-        {
-          "item": "cgs:press_form_shotgun"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "cgs:press_form_shotgun",
       "keep_held_item": true,
       "results": [
-        {
-          "id": "cgs:shell_shotgun"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:shell_shotgun"
-        },
-        {
-          "item": "minecraft:paper"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "minecraft:paper",
       "results": [
-        {
-          "id": "cgs:shell_shotgun"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:shell_shotgun"
-        },
-        {
-          "tag": "c:gunpowders"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:gunpowders",
       "results": [
-        {
-          "id": "cgs:shell_shotgun"
-        }
+        "$result"
       ]
     }
-  ],
-  "transitional_item": {
-    "id": "cgs:shell_shotgun"
-  }
+  ]
 }

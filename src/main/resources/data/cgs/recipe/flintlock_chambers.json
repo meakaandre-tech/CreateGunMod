@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "c:plates/iron"
-    },
-    "C": {
-      "item": "create:cogwheel"
-    }
+    "B": "#c:plates/iron",
+    "C": "create:cogwheel"
   },
   "pattern": [
     "BBB",
@@ -15,7 +11,6 @@
     "BBB"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:flintlock_chambers"
   }
 }

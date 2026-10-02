@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "cgs:lead_block"
-    }
+    "cgs:lead_block"
   ],
   "result": {
     "count": 9,

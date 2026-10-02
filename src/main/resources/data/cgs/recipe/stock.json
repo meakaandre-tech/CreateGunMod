@@ -2,19 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "W": {
-      "tag": "c:stripped_logs"
-    }
+    "L": "#c:plates/brass",
+    "W": "#c:stripped_logs"
   },
   "pattern": [
     "WLW",
     " WW"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:stock"
   }
 }

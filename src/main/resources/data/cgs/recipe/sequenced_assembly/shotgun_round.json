@@ -1,32 +1,10 @@
 {
-  "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "cgs:round_shotgun_blank"
-  },
+  "type": "create:deploying",
+  "target": "cgs:round_shotgun_blank",
+  "ingredient": "cgs:lead_balls",
   "results": [
     {
       "id": "cgs:round_shotgun"
     }
-  ],
-  "sequence": [
-    {
-      "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:shell_shotgun"
-        },
-        {
-          "item": "cgs:lead_balls"
-        }
-      ],
-      "results": [
-        {
-          "id": "cgs:shell_shotgun"
-        }
-      ]
-    }
-  ],
-  "transitional_item": {
-    "id": "cgs:shell_shotgun"
-  }
+  ]
 }

@@ -1,26 +1,12 @@
 {
   "type": "create:mechanical_crafting",
-  "accept_mirrored": false,
-  "category": "misc",
   "key": {
-    "A": {
-      "item": "create:andesite_alloy"
-    },
-    "C": {
-      "item": "create:chute"
-    },
-    "I": {
-      "tag": "c:plates/steel"
-    },
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "P": {
-      "item": "create:fluid_pipe"
-    },
-    "W": {
-      "tag": "c:stripped_logs"
-    }
+    "A": "create:andesite_alloy",
+    "C": "create:chute",
+    "I": "#c:plates/steel",
+    "L": "#c:plates/brass",
+    "P": "create:fluid_pipe",
+    "W": "#c:stripped_logs"
   },
   "pattern": [
     "APLLPA",
@@ -29,8 +15,6 @@
     " WW   "
   ],
   "result": {
-    "count": 1,
     "id": "cgs:launcher"
-  },
-  "show_notification": false
+  }
 }

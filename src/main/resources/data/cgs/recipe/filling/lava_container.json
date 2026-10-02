@@ -1,18 +1,12 @@
 {
   "type": "create:filling",
-  "ingredients": [
-    {
-      "item": "cgs:tank_empty"
-    },
-    {
-      "type": "neoforge:single",
-      "amount": 1000,
-      "fluid": "minecraft:lava"
-    }
-  ],
-  "results": [
-    {
-      "id": "cgs:tank_lava"
-    }
-  ]
+  "ingredient": "cgs:tank_empty",
+  "fluid_ingredient": {
+    "type": "fluid_stack",
+    "amount": 81000,
+    "fluid": "minecraft:lava"
+  },
+  "result": {
+    "id": "cgs:tank_lava"
+  }
 }

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": {
-      "tag": "c:plates/iron"
-    },
-    "W": {
-      "tag": "c:stripped_logs"
-    }
+    "I": "#c:plates/iron",
+    "W": "#c:stripped_logs"
   },
   "pattern": [
     "II ",

@@ -1,17 +1,11 @@
 {
   "type": "create:emptying",
-  "ingredients": [
-    {
-      "item": "cgs:tank_water"
-    }
-  ],
-  "results": [
-    {
-      "id": "cgs:tank_empty"
-    },
-    {
-      "amount": 1000,
-      "id": "minecraft:water"
-    }
-  ]
+  "ingredient": "cgs:tank_water",
+  "fluid_result": {
+    "amount": 81000,
+    "id": "minecraft:water"
+  },
+  "result": {
+    "id": "cgs:tank_empty"
+  }
 }

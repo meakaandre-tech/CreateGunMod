@@ -1,10 +1,6 @@
 {
   "type": "create:crushing",
-  "ingredients": [
-    {
-      "item": "minecraft:charcoal"
-    }
-  ],
+  "ingredient": "minecraft:charcoal",
   "processing_time": 100,
   "results": [
     {

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "c:plates/steel"
-    },
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "W": {
-      "tag": "c:stripped_logs"
-    }
+    "B": "#c:plates/steel",
+    "L": "#c:plates/brass",
+    "W": "#c:stripped_logs"
   },
   "pattern": [
     "BB ",
@@ -18,7 +12,6 @@
     "BB "
   ],
   "result": {
-    "count": 1,
     "id": "cgs:shotgun_long_barrel"
   }
 }

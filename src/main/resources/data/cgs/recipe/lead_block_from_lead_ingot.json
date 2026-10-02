@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "S": {
-      "item": "cgs:lead_ingot"
-    }
+    "S": "cgs:lead_ingot"
   },
   "pattern": [
     "SSS",
@@ -12,7 +10,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:lead_block"
   }
 }

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "item": "cgs:charcoal_dust"
-    },
-    {
-      "item": "cgs:sulfur"
-    },
-    {
-      "item": "cgs:niter"
-    }
+    "cgs:charcoal_dust",
+    "cgs:sulfur",
+    "cgs:niter"
   ],
   "result": {
     "count": 3,

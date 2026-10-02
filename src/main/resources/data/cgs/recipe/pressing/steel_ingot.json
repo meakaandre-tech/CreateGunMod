@@ -1,10 +1,6 @@
 {
   "type": "create:pressing",
-  "ingredients": [
-    {
-      "item": "cgs:steel_ingot"
-    }
-  ],
+  "ingredient": "cgs:steel_ingot",
   "results": [
     {
       "id": "cgs:steel_sheet"

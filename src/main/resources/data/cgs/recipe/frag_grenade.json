@@ -2,28 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "tag": "c:plates/brass"
-    },
-    "C": {
-      "tag": "c:nuggets/copper"
-    },
-    "G": {
-      "item": "minecraft:gunpowder"
-    },
-    "I": {
-      "tag": "c:plates/iron"
-    },
-    "Ж": {
-      "item": "create:cogwheel"
-    }
+    "B": "#c:plates/brass",
+    "C": "#c:nuggets/copper",
+    "G": "minecraft:gunpowder",
+    "I": "#c:plates/iron",
+    "\u0416": "create:cogwheel"
   },
   "pattern": [
-    " CЖ",
+    " C\u0416",
     "IGB"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:frag_grenade"
   }
 }

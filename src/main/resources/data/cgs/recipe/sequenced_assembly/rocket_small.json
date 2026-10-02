@@ -1,49 +1,29 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "tag": "c:plates/iron"
+  "ingredient": "#c:plates/iron",
+  "transitional_item": {
+    "id": "create:brass_sheet"
   },
-  "results": [
-    {
-      "count": 5,
-      "id": "cgs:rocket_small"
-    }
-  ],
+  "result": {
+    "count": 5,
+    "id": "cgs:rocket_small"
+  },
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "create:brass_sheet"
-        },
-        {
-          "item": "minecraft:tnt"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "minecraft:tnt",
       "results": [
-        {
-          "id": "create:brass_sheet"
-        }
+        "$result"
       ]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "create:brass_sheet"
-        },
-        {
-          "tag": "c:plates/brass"
-        }
-      ],
+      "target": "$ingredient",
+      "ingredient": "#c:plates/brass",
       "results": [
-        {
-          "id": "create:brass_sheet"
-        }
+        "$result"
       ]
     }
-  ],
-  "transitional_item": {
-    "id": "create:brass_sheet"
-  }
+  ]
 }

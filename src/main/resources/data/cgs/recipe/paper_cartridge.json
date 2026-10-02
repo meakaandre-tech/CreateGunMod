@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    {
-      "tag": "c:nuggets/lead"
-    },
-    {
-      "tag": "c:gunpowders"
-    },
-    {
-      "item": "minecraft:paper"
-    }
+    "#c:nuggets/lead",
+    "#c:gunpowders",
+    "minecraft:paper"
   ],
   "result": {
     "count": 3,

@@ -1,29 +1,13 @@
 {
   "type": "create:mechanical_crafting",
-  "accept_mirrored": false,
-  "category": "misc",
   "key": {
-    "B": {
-      "tag": "create:toolboxes"
-    },
-    "C": {
-      "tag": "c:plates/copper"
-    },
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "P": {
-      "item": "create:fluid_pipe"
-    },
-    "T": {
-      "item": "create:copper_backtank"
-    },
-    "c": {
-      "item": "create:cogwheel"
-    },
-    "p": {
-      "item": "create:precision_mechanism"
-    }
+    "B": "#create:toolboxes",
+    "C": "#c:plates/copper",
+    "L": "#c:plates/brass",
+    "P": "create:fluid_pipe",
+    "T": "create:copper_backtank",
+    "c": "create:cogwheel",
+    "p": "create:precision_mechanism"
   },
   "pattern": [
     "LLCC ",
@@ -31,8 +15,6 @@
     "PPccT"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:launcher_auto"
-  },
-  "show_notification": false
+  }
 }

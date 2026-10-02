@@ -1,17 +1,9 @@
 {
   "type": "create:mechanical_crafting",
-  "accept_mirrored": false,
-  "category": "misc",
   "key": {
-    "C": {
-      "item": "create:cogwheel"
-    },
-    "L": {
-      "tag": "c:plates/brass"
-    },
-    "S": {
-      "tag": "c:plates/steel"
-    }
+    "C": "create:cogwheel",
+    "L": "#c:plates/brass",
+    "S": "#c:plates/steel"
   },
   "pattern": [
     "LSLLSL",
@@ -19,8 +11,6 @@
     "LSLLSL"
   ],
   "result": {
-    "count": 1,
     "id": "cgs:shotgun_drum"
-  },
-  "show_notification": false
+  }
 }

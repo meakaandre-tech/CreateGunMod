@@ -1,32 +1,10 @@
 {
-  "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "cgs:round_shotgun_blank"
-  },
+  "type": "create:deploying",
+  "target": "cgs:round_shotgun_blank",
+  "ingredient": "cgs:nail_steel",
   "results": [
     {
       "id": "cgs:round_shotgun_flechette_steel"
     }
-  ],
-  "sequence": [
-    {
-      "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "cgs:shell_shotgun"
-        },
-        {
-          "item": "cgs:nail_steel"
-        }
-      ],
-      "results": [
-        {
-          "id": "cgs:shell_shotgun"
-        }
-      ]
-    }
-  ],
-  "transitional_item": {
-    "id": "cgs:shell_shotgun"
-  }
+  ]
 }

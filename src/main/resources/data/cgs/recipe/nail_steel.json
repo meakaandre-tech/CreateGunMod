@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "N": {
-      "tag": "c:nuggets/steel"
-    }
+    "N": "#c:nuggets/steel"
   },
   "pattern": [
     "N",

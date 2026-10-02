@@ -1,10 +1,7 @@
 {
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "tag": "c:nuggets/lead"
-  },
+  "ingredient": "#c:nuggets/lead",
   "result": {
-    "count": 1,
     "id": "cgs:lead_balls"
   }
 }
