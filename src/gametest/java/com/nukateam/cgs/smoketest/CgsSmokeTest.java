@@ -294,14 +294,28 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.waitTicks(setup[0].equals("nailgun") ? 4 : 9);
                     server.runCommand("tick freeze");
                     context.getInput().releaseMouse(0);
-                    server.runCommand("execute at @e[type=!minecraft:player,limit=1] run tp @a ~2 ~-1.6 ~ facing entity @e[type=!minecraft:player,limit=1,sort=nearest]");
-                    context.waitTicks(3);
+                    context.waitTicks(2);
+                    context.runOnClient(mc -> {
+                        for (var entity : mc.level.entitiesForRendering()) {
+                            if (entity instanceof net.minecraft.world.entity.player.Player)
+                                continue;
+                            log("frozen " + name + ": " + entity.getType().toShortString() + " age " + entity.tickCount
+                                    + " distance " + entity.distanceTo(mc.player) + " at " + entity.position());
+                            // move the camera beside the projectile, looking at it
+                            var target = entity.position();
+                            mc.player.getAbilities().flying = true;
+                            mc.player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+                            mc.player.snapTo(target.x + 2.5, target.y - 1.6, target.z, 90F, 0F);
+                        }
+                    });
+                    context.waitTicks(2);
                     context.takeScreenshot("27_frozen_" + name);
                     context.runOnClient(mc -> {
                         for (var entity : mc.level.entitiesForRendering())
                             if (!(entity instanceof net.minecraft.world.entity.player.Player))
-                                log("frozen " + name + ": " + entity.getType().toShortString() + " age " + entity.tickCount
+                                log("frozen " + name + " after: " + entity.getType().toShortString() + " age " + entity.tickCount
                                         + " distance " + entity.distanceTo(mc.player));
+                        mc.player.getAbilities().flying = false;
                     });
                     server.runCommand("tick unfreeze");
                     context.waitTicks(5);
