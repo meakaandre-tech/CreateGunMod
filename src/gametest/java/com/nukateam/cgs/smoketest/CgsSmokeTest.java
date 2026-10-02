@@ -291,12 +291,18 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
                     context.waitTicks(200);
                     context.getInput().holdMouse(0);
-                    context.waitTicks(3);
+                    context.waitTicks(setup[0].equals("nailgun") ? 4 : 9);
                     server.runCommand("tick freeze");
                     context.getInput().releaseMouse(0);
                     server.runCommand("execute at @e[type=!minecraft:player,limit=1] run tp @a ~2 ~-1.6 ~ facing entity @e[type=!minecraft:player,limit=1,sort=nearest]");
                     context.waitTicks(3);
                     context.takeScreenshot("27_frozen_" + name);
+                    context.runOnClient(mc -> {
+                        for (var entity : mc.level.entitiesForRendering())
+                            if (!(entity instanceof net.minecraft.world.entity.player.Player))
+                                log("frozen " + name + ": " + entity.getType().toShortString() + " age " + entity.tickCount
+                                        + " distance " + entity.distanceTo(mc.player));
+                    });
                     server.runCommand("tick unfreeze");
                     context.waitTicks(5);
                 }
