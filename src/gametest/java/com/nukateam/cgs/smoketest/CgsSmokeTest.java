@@ -90,9 +90,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.runOnClient(mc -> logState(mc, "survival: after reload, rounds " + rounds(mc)));
                 for (int i = 0; i < 3; i++) {
                     context.getInput().holdMouse(0);
-                    context.waitTicks(3);
+                    context.waitTicks(10);
                     context.getInput().releaseMouse(0);
-                    context.waitTicks(15);
+                    context.waitTicks(20);
                 }
                 context.runOnClient(mc -> logState(mc, "survival: after three shots, rounds " + rounds(mc)));
                 server.runCommand("gamemode creative @a");
@@ -131,6 +131,49 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 server.runCommand("item replace entity @a weapon.offhand with minecraft:air");
                 server.runCommand("kill @e[type=!minecraft:player]");
                 context.waitTicks(5);
+            });
+
+            step("air from a backtank", () -> {
+                arena(context, server);
+                hold(context, server, "hammer");
+                server.runCommand("gamemode survival @a");
+                server.runCommand("give @a create:copper_backtank[create:banktank_air=600]");
+                context.waitTicks(10);
+                context.runOnClient(mc -> logState(mc, "air: before reload, tank " + tankAir(mc)));
+                context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
+                context.waitTicks(120);
+                context.runOnClient(mc -> logState(mc, "air: after reload, tank " + tankAir(mc)));
+                at(server, "summon minecraft:zombie {x+0.5} 150 {z+2.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
+                context.waitTicks(5);
+                context.getInput().holdMouse(0);
+                context.waitTicks(10);
+                context.getInput().releaseMouse(0);
+                context.waitTicks(40);
+                context.takeScreenshot("22_hammer_melee");
+                context.runOnClient(mc -> logState(mc, "air: after a hit, tank " + tankAir(mc)));
+                logLiving(server, "air");
+                server.runCommand("gamemode creative @a");
+                server.runCommand("clear @a create:copper_backtank");
+                context.waitTicks(5);
+            });
+
+            step("mechanical press recipe", () -> {
+                arena(context, server);
+                at(server, "setblock {x+0} 150 {z+3} create:depot");
+                at(server, "setblock {x+0} 152 {z+3} create:mechanical_press[horizontal_facing=east]");
+                at(server, "setblock {x-1} 152 {z+3} create:creative_motor[facing=east]");
+                at(server, "summon item {x+0.5} 151.5 {z+3.5} {Item:{id:\"cgs:steel_ingot\",count:1}}");
+                context.waitTicks(300);
+                context.takeScreenshot("23_mechanical_press");
+                server.runOnServer(minecraftServer -> {
+                    var level = minecraftServer.getPlayerList().getPlayers().getFirst().level();
+                    for (int y = 150; y <= 152; y += 2) {
+                        var pos = new net.minecraft.core.BlockPos(baseX, y, baseZ + 3);
+                        var blockEntity = level.getBlockEntity(pos);
+                        log("press test: " + level.getBlockState(pos) + " -> "
+                                + (blockEntity == null ? null : blockEntity.saveWithoutMetadata(level.registryAccess())));
+                    }
+                });
             });
 
             step("third person", () -> {
@@ -281,6 +324,16 @@ public class CgsSmokeTest implements FabricClientGameTest {
             WeaponStateHelper.writeAttachments(java.util.List.of(new net.minecraft.world.item.ItemStack(
                     com.nukateam.cgs.common.faundation.registry.items.CgsAttachments.STEAM_ENGINE.get())), new WeaponData(stack, player));
         });
+    }
+
+    private static String tankAir(Minecraft mc) {
+        var inventory = mc.player.getInventory();
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            var stack = inventory.getItem(i);
+            if (stack.getItem() instanceof com.zurrtum.create.content.equipment.armor.BacktankItem)
+                return String.valueOf(com.zurrtum.create.content.equipment.armor.BacktankUtil.getAir(stack));
+        }
+        return "none";
     }
 
     private static int rounds(Minecraft mc) {
