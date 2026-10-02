@@ -278,6 +278,30 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 }
             });
 
+            step("frozen projectiles", () -> {
+                // freeze the game right after the shot and look at the projectile model from the side
+                String[][] setups = {{"launcher"}, {"launcher", "ballistazooka"}, {"nailgun"}};
+                for (var setup : setups) {
+                    var name = String.join("+", setup);
+                    arena(context, server);
+                    hold(context, server, setup[0]);
+                    attach(server, java.util.Arrays.copyOfRange(setup, 1, setup.length));
+                    at(server, "tp @a {x+0.5} 150 {z+0.5} 0 -50");
+                    context.waitTicks(10);
+                    context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
+                    context.waitTicks(200);
+                    context.getInput().holdMouse(0);
+                    context.waitTicks(3);
+                    server.runCommand("tick freeze");
+                    context.getInput().releaseMouse(0);
+                    server.runCommand("execute at @e[type=!minecraft:player,limit=1] run tp @a ~2 ~-1.6 ~ facing entity @e[type=!minecraft:player,limit=1,sort=nearest]");
+                    context.waitTicks(3);
+                    context.takeScreenshot("27_frozen_" + name);
+                    server.runCommand("tick unfreeze");
+                    context.waitTicks(5);
+                }
+            });
+
             step("third person", () -> {
                 for (var weapon : new String[]{"revolver", "gatling", "hammer"}) {
                     arena(context, server);
