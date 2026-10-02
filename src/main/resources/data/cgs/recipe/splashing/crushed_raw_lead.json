@@ -1,0 +1,14 @@
+{
+  "type": "create:splashing",
+  "ingredient": "create:crushed_raw_lead",
+  "results": [
+    {
+      "id": "cgs:lead_nugget",
+      "count": 9
+    },
+    {
+      "id": "create:experience_nugget",
+      "chance": 0.5
+    }
+  ]
+}

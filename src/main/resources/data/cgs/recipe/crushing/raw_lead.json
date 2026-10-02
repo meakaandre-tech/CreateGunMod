@@ -1,0 +1,14 @@
+{
+  "type": "create:crushing",
+  "ingredient": "#c:raw_materials/lead",
+  "processing_time": 400,
+  "results": [
+    {
+      "id": "create:crushed_raw_lead"
+    },
+    {
+      "id": "create:experience_nugget",
+      "chance": 0.75
+    }
+  ]
+}

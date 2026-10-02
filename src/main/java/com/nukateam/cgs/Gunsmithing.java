@@ -14,6 +14,7 @@ import com.nukateam.ntgl.Ntgl;
 import com.nukateam.ntgl.platform.PlatformHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.minecraft.tags.BiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.minecraft.core.registries.Registries;
@@ -53,8 +54,9 @@ public class Gunsmithing implements ModInitializer {
         FuelValueEvents.BUILD.register((builder, context) ->
                 builder.add(CgsItems.LAVA_CONTAINER.get(), 20000));
 
-        // ore generation (was data/cgs/neoforge/biome_modifier)
-        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Decoration.UNDERGROUND_ORES,
+        // ore generation (was data/cgs/neoforge/biome_modifier): lead in #minecraft:is_overworld as the original modifier,
+        // plus every biome the overworld dimension generates (world generation packs leave biomes out of the tag)
+        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_OVERWORLD).or(BiomeSelectors.foundInOverworld()), GenerationStep.Decoration.UNDERGROUND_ORES,
                 ResourceKey.create(Registries.PLACED_FEATURE, cgsResource("lead_ore_placed")));
         BiomeModifications.addFeature(BiomeSelectors.foundInTheNether(), GenerationStep.Decoration.UNDERGROUND_ORES,
                 ResourceKey.create(Registries.PLACED_FEATURE, cgsResource("sulfur_ore_placed")));
