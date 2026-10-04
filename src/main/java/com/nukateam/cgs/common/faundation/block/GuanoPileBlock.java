@@ -2,7 +2,8 @@ package com.nukateam.cgs.common.faundation.block;
 
 import com.nukateam.cgs.common.faundation.registry.items.CgsItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -26,7 +27,7 @@ public class GuanoPileBlock extends SnowLayerBlock {
         return Block.isFaceFull(belowState.getCollisionShape(level, pos.below()), Direction.UP);
     }
     @Override
-    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
         super.playerDestroy(level, player, pos, state, blockEntity, tool);
         int layers = state.getValue(LAYERS);
         popResource(level, pos, new ItemStack(CgsItems.GUANO.get(), layers));
