@@ -128,6 +128,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.runOnClient(mc -> log("fuel: water after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
                 // the lava tank is a furnace fuel (cooking fuel component) and feeds the engine like a lava bucket
+                // (the blazegun's engine only takes water; the gatling's burns fuel too)
+                hold(context, server, "gatling");
+                attach(server, "steam_engine");
                 server.runCommand("item replace entity @a weapon.offhand with cgs:tank_lava");
                 context.waitTicks(10);
                 context.runOnClient(mc -> log("fuel: burnable before " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.BURNABLE)
@@ -150,8 +153,6 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 var lead = com.nukateam.cgs.common.faundation.registry.CgsBlocks.LEAD_ORE.get();
                 var deepLead = com.nukateam.cgs.common.faundation.registry.CgsBlocks.DEEPSLATE_LEAD_ORE.get();
                 var sulfur = com.nukateam.cgs.common.faundation.registry.CgsBlocks.SULFUR_ORE.get();
-                log("worldgen: biome at the player " + level.getBiome(player.blockPosition()).unwrapKey().map(key -> key.identifier().toString()).orElse("?")
-                        + ", overworld chunks around the player " + countBlocks(level, baseX >> 4, baseZ >> 4, 2, lead, deepLead, sulfur));
                 var nether = minecraftServer.getLevel(net.minecraft.world.level.Level.NETHER);
                 log("worldgen: nether chunks around 0,0 " + countBlocks(nether, 0, 0, 1, lead, deepLead, sulfur));
 
@@ -479,6 +480,26 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.waitTicks(15);
                 context.runOnClient(mc -> log("dedicated fuel: water after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
+            });
+        }
+
+        step("world generation", () -> normalWorld(context));
+    }
+
+    private static void normalWorld(ClientGameTestContext context) {
+        // The worlds above use the test framework's consistent (flat) settings, which generate no ores:
+        // lead ore generation needs a world with the default generator.
+        try (var normal = context.worldBuilder().setUseConsistentSettings(false).create()) {
+            normal.getServer().runOnServer(minecraftServer -> {
+                var player = minecraftServer.getPlayerList().getPlayers().getFirst();
+                var level = player.level();
+                var position = player.blockPosition();
+                log("worldgen: default world, biome at the player " + level.getBiome(position).unwrapKey().map(key -> key.identifier().toString()).orElse("?")
+                        + ", 5x5 chunks around the player " + countBlocks(level, position.getX() >> 4, position.getZ() >> 4, 2,
+                        com.nukateam.cgs.common.faundation.registry.CgsBlocks.LEAD_ORE.get(),
+                        com.nukateam.cgs.common.faundation.registry.CgsBlocks.DEEPSLATE_LEAD_ORE.get(),
+                        net.minecraft.world.level.block.Blocks.IRON_ORE, net.minecraft.world.level.block.Blocks.DEEPSLATE_IRON_ORE,
+                        net.minecraft.world.level.block.Blocks.TUFF));
             });
         }
     }
