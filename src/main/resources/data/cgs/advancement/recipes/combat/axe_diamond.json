@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:axe_diamond"
+        "recipes": "cgs:axe_diamond"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

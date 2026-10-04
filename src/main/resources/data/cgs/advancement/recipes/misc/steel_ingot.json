@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:steel_ingot"
+        "recipes": "cgs:steel_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

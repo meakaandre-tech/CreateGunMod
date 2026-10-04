@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:lead_balls"
+        "recipes": "cgs:lead_balls"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

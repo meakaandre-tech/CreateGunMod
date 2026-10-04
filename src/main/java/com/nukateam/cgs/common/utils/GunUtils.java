@@ -35,7 +35,7 @@ public class GunUtils {
 
     public static void giveItemToPlayer(Player player, ItemStack itemStack) {
         if (!player.getInventory().add(itemStack)) {
-            player.drop(itemStack, false);
+            player.drop(itemStack, false, net.minecraft.util.Prediction.SERVER_ONLY);
         }
     }
 

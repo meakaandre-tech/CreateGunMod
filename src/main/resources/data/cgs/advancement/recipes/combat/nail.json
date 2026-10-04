@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:nail"
+        "recipes": "cgs:nail"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

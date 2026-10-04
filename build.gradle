@@ -23,7 +23,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${project.loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // NTGL, GeckoLib 5 and Create Fly for Fabric 26.2 (and the jars nested in them), downloaded by CI into libs/
+    // NTGL, GeckoLib 5 and Create Fly for Fabric 26.3 (and the jars nested in them), downloaded by CI into libs/
     compileOnly fileTree(dir: "libs", include: ["*.jar", "nested/*.jar"])
 
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"

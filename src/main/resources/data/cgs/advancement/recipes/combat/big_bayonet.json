@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:big_bayonet"
+        "recipes": "cgs:big_bayonet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

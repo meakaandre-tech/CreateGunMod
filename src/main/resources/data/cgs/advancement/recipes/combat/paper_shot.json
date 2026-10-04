@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:paper_shot"
+        "recipes": "cgs:paper_shot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:flintlock_chambers"
+        "recipes": "cgs:flintlock_chambers"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

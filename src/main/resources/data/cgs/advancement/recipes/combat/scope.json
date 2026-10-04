@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:scope"
+        "recipes": "cgs:scope"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

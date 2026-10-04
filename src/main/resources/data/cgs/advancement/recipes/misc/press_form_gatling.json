@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:press_form_gatling"
+        "recipes": "cgs:press_form_gatling"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

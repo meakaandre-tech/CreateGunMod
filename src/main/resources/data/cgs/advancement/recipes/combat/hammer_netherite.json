@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:hammer_netherite"
+        "recipes": "cgs:hammer_netherite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

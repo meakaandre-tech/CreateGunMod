@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:hammer_iron"
+        "recipes": "cgs:hammer_iron"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

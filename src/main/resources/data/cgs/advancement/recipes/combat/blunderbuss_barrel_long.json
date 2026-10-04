@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:blunderbuss_barrel_long"
+        "recipes": "cgs:blunderbuss_barrel_long"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

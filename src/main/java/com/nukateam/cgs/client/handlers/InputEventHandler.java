@@ -12,7 +12,7 @@ import com.nukateam.ntgl.platform.event.client.InputEvent;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import com.nukateam.ntgl.platform.SubscribeEvent;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class InputEventHandler {
 
@@ -24,7 +24,7 @@ public class InputEventHandler {
             var mainHandItem = player.getMainHandItem();
             var offhandItem = player.getOffhandItem();
 
-            if (event.getAction() == GLFW.GLFW_RELEASE && event.getButton() == KeyMappingHelper.getBoundKeyOf(mc.options.keyUse).getValue()) {
+            if (event.getAction() == InputConstants.RELEASE && event.getButton() == KeyMappingHelper.getBoundKeyOf(mc.options.keyUse).getValue()) {
                 if (WeaponModifierHelper.isGun(mainHandItem)) {
                     fillEngine(mainHandItem, offhandItem);
                 } else if (WeaponModifierHelper.isGun(offhandItem)) {

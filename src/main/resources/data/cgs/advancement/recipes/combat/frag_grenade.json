@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:frag_grenade"
+        "recipes": "cgs:frag_grenade"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

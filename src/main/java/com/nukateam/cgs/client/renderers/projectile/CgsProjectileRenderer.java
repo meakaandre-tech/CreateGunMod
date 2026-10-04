@@ -57,8 +57,8 @@ public class CgsProjectileRenderer<T extends ProjectileEntity & GeoAnimatable, R
         {
             var scale = renderState.getOrDefaultGeckolibData(SCALE, 1f);
             poseStack.scale(scale, scale, scale);
-            poseStack.mulPose(Axis.YP.rotationDegrees(renderState.getOrDefaultGeckolibData(YAW, 0f)));
-            poseStack.mulPose(Axis.XP.rotationDegrees(-renderState.getOrDefaultGeckolibData(PITCH, 0f)));
+            poseStack.rotate(Axis.YP.rotationDegrees(renderState.getOrDefaultGeckolibData(YAW, 0f)));
+            poseStack.rotate(Axis.XP.rotationDegrees(-renderState.getOrDefaultGeckolibData(PITCH, 0f)));
             super.submit(renderState, poseStack, collector, cameraState);
         }
         poseStack.popPose();

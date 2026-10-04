@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:hammer_diamond"
+        "recipes": "cgs:hammer_diamond"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

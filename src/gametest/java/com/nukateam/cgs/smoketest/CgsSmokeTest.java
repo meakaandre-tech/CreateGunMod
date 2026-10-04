@@ -14,7 +14,7 @@ import net.fabricmc.fabric.api.client.gametest.v1.context.TestServerContext;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -62,11 +62,11 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     at(server, "summon minecraft:zombie {x+0.5} 150 {z+4.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                     context.waitTicks(5);
                     context.runOnClient(mc -> logState(mc, weapon + ": before attack"));
-                    context.getInput().holdMouse(0);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     var seen = watchEntities(context, 6);
                     context.takeScreenshot("10_" + weapon + "_3_attack");
                     seen.addAll(watchEntities(context, 24));
-                    context.getInput().releaseMouse(0);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     seen.addAll(watchEntities(context, 50));
                     context.takeScreenshot("10_" + weapon + "_4_after");
                     log(weapon + ": entities seen " + seen);
@@ -89,9 +89,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.waitTicks(420);
                 context.runOnClient(mc -> logState(mc, "survival: after reload, rounds " + rounds(mc)));
                 for (int i = 0; i < 3; i++) {
-                    context.getInput().holdMouse(0);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     context.waitTicks(10);
-                    context.getInput().releaseMouse(0);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     context.waitTicks(20);
                 }
                 context.runOnClient(mc -> logState(mc, "survival: after three shots, rounds " + rounds(mc)));
@@ -104,10 +104,10 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 arena(context, server);
                 hold(context, server, "revolver");
                 context.waitTicks(20);
-                context.getInput().holdMouse(1);
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(15);
                 context.takeScreenshot("20_revolver_aiming");
-                context.getInput().releaseMouse(1);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(10);
             });
 
@@ -121,9 +121,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.takeScreenshot("21_blazegun_with_engine");
                 context.runOnClient(mc -> log("fuel: water before " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
-                context.getInput().holdMouse(1);
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(3);
-                context.getInput().releaseMouse(1);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(15);
                 context.runOnClient(mc -> log("fuel: water after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
@@ -145,9 +145,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.runOnClient(mc -> logState(mc, "air: after reload, tank " + tankAir(mc)));
                 at(server, "summon minecraft:zombie {x+0.5} 150 {z+2.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                 context.waitTicks(5);
-                context.getInput().holdMouse(0);
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                 context.waitTicks(10);
-                context.getInput().releaseMouse(0);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                 context.waitTicks(40);
                 context.takeScreenshot("22_hammer_melee");
                 context.runOnClient(mc -> logState(mc, "air: after a hit, tank " + tankAir(mc)));
@@ -171,9 +171,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     var block = head.startsWith("axe") ? "minecraft:oak_log" : "minecraft:stone";
                     at(server, "fill {x-1} 150 {z+2} {x+1} 152 {z+2} " + block);
                     context.waitTicks(10);
-                    context.getInput().holdMouse(1);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                     context.waitTicks(15);
-                    context.getInput().releaseMouse(1);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                     context.waitTicks(30);
                     context.takeScreenshot("22_" + head + "_blocks");
                     server.runOnServer(minecraftServer -> {
@@ -242,13 +242,13 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.runOnClient(mc -> logState(mc, "ballistazooka: after reload"));
                 at(server, "summon minecraft:zombie {x+0.5} 150 {z+8.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                 context.waitTicks(5);
-                context.getInput().holdMouse(0);
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                 var seen = new TreeSet<String>();
                 for (int i = 0; i < 6; i++) {
                     seen.addAll(watchEntities(context, 1));
                     context.takeScreenshot("25_ballistazooka_shot_" + i);
                 }
-                context.getInput().releaseMouse(0);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                 seen.addAll(watchEntities(context, 40));
                 context.takeScreenshot("25_ballistazooka_after");
                 log("ballistazooka: entities seen " + seen);
@@ -266,13 +266,13 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.waitTicks(10);
                     context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
                     context.waitTicks(200);
-                    context.getInput().holdMouse(0);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     var seen = new TreeSet<String>();
                     seen.addAll(watchEntities(context, 3));
                     context.takeScreenshot("26_flight_" + name + "_0");
                     seen.addAll(watchEntities(context, 3));
                     context.takeScreenshot("26_flight_" + name + "_1");
-                    context.getInput().releaseMouse(0);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     seen.addAll(watchEntities(context, 20));
                     log("flight " + name + ": entities seen " + seen);
                 }
@@ -290,7 +290,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.waitTicks(10);
                     context.getInput().holdKeyFor(NtglKeyBinds.KEY_RELOAD, 4);
                     context.waitTicks(200);
-                    context.getInput().holdMouse(0);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     var found = new boolean[1];
                     for (int i = 0; i < 14 && !found[0]; i++) {
                         context.waitTick();
@@ -306,7 +306,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                         });
                     }
                     server.runCommand("tick freeze");
-                    context.getInput().releaseMouse(0);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     context.waitTicks(2);
                     context.runOnClient(mc -> {
                         for (var entity : mc.level.entitiesForRendering()) {
@@ -367,7 +367,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.getInput().pressKey(options -> options.keyInventory);
                 context.waitTicks(10);
                 context.takeScreenshot("40_inventory");
-                context.getInput().pressKey(GLFW.GLFW_KEY_ESCAPE);
+                context.getInput().pressKey(InputConstants.KEY_ESCAPE);
                 server.runCommand("gamemode creative @a");
                 context.waitTicks(5);
             });
@@ -376,7 +376,7 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.getInput().pressKey(NtglKeyBinds.KEY_ATTACHMENTS);
                 context.waitTicks(15);
                 context.takeScreenshot("41_attachments_screen");
-                context.getInput().pressKey(GLFW.GLFW_KEY_ESCAPE);
+                context.getInput().pressKey(InputConstants.KEY_ESCAPE);
                 context.waitTicks(5);
             });
 
@@ -413,9 +413,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                     context.waitTicks(100);
                     at(dedicated, "summon minecraft:zombie {x+0.5} 150 {z+4.5} {NoAI:1b,PersistenceRequired:1b,Rotation:[180f,0f]}");
                     context.waitTicks(10);
-                    context.getInput().holdMouse(0);
+                    context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     var seen = watchEntities(context, 30);
-                    context.getInput().releaseMouse(0);
+                    context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_LEFT);
                     context.takeScreenshot("50_dedicated_" + weapon);
                     seen.addAll(watchEntities(context, 30));
                     log("dedicated " + weapon + ": entities seen " + seen);
@@ -433,9 +433,9 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 dedicated.runCommand("item replace entity @a weapon.offhand with minecraft:water_bucket");
                 dedicated.runCommand("gamemode survival @a");
                 context.waitTicks(10);
-                context.getInput().holdMouse(1);
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(3);
-                context.getInput().releaseMouse(1);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_RIGHT);
                 context.waitTicks(15);
                 context.runOnClient(mc -> log("dedicated fuel: water after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));

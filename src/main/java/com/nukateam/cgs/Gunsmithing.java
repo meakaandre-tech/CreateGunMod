@@ -16,7 +16,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.minecraft.tags.BiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -49,10 +48,6 @@ public class Gunsmithing implements ModInitializer {
         Ntgl.EVENT_BUS.register(GunEventHandler.class);
         Ntgl.EVENT_BUS.register(MeleeHandler.class);
         Ntgl.EVENT_BUS.register(GuanoAccumulationHandler.class);
-
-        // the lava tank burns like a lava bucket
-        FuelValueEvents.BUILD.register((builder, context) ->
-                builder.add(CgsItems.LAVA_CONTAINER.get(), 20000));
 
         // ore generation (was data/cgs/neoforge/biome_modifier): lead in #minecraft:is_overworld as the original modifier,
         // plus every biome the overworld dimension generates (world generation packs leave biomes out of the tag)

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:raw_lead"
+        "recipes": "cgs:raw_lead"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

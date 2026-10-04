@@ -20,8 +20,8 @@ public class FireballRenderer extends ProjectileRenderer {
                        SubmitNodeCollector collector, CameraRenderState cameraState, int light) {
         if (entity.tickCount >= 2 || !(cameraState.pos.distanceToSqr(entity.position()) < 12.25D)) {
             poseStack.pushPose();
-            poseStack.mulPose(cameraState.orientation);
-            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+            poseStack.rotate(cameraState.orientation);
+            poseStack.rotate(Axis.YP.rotationDegrees(180.0F));
             renderItem(entity.getItem(), ItemDisplayContext.GROUND, light, OverlayTexture.NO_OVERLAY, poseStack, collector, entity);
             poseStack.popPose();
         }

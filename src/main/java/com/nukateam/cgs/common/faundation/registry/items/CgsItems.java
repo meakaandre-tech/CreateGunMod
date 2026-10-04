@@ -6,6 +6,8 @@ import com.nukateam.cgs.common.faundation.item.FluidContainerItem;
 import com.nukateam.cgs.common.faundation.registry.CgsBlocks;
 import com.nukateam.ntgl.common.foundation.item.AmmoItem;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.material.Fluid;
@@ -24,7 +26,9 @@ public class CgsItems {
     public static final DeferredHolder<Item, Item> WATER_CONTAINER = ITEMS.registerItem("tank_water",
             p -> new FluidContainerItem(Fluids.WATER, p.stacksTo(16).craftRemainder(EMPTY_CONTAINER.get())));
     public static final DeferredHolder<Item, Item> LAVA_CONTAINER = ITEMS.registerItem("tank_lava",
-            p -> new FluidContainerItem(Fluids.LAVA, p.stacksTo(16).craftRemainder(EMPTY_CONTAINER.get())));
+            // the lava tank burns like a lava bucket (26.3: burn time is the cooking fuel component)
+            p -> new FluidContainerItem(Fluids.LAVA, p.stacksTo(16).craftRemainder(EMPTY_CONTAINER.get())
+                    .cookingFuel(ResourceKey.create(Registries.CONTEXT_INT_PROVIDER, Identifier.withDefaultNamespace("cooking/time_lava_bucket")))));
 
     public static Map<Fluid, DeferredHolder<Item, Item>> CONTAINERS = Map.of(
             Fluids.WATER, WATER_CONTAINER,

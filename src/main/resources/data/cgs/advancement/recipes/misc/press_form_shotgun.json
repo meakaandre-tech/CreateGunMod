@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:press_form_shotgun"
+        "recipes": "cgs:press_form_shotgun"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

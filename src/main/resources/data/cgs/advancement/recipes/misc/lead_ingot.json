@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:lead_ingot"
+        "recipes": "cgs:lead_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

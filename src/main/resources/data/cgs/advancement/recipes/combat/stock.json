@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:stock"
+        "recipes": "cgs:stock"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

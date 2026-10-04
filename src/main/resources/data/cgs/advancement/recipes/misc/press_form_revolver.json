@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:press_form_revolver"
+        "recipes": "cgs:press_form_revolver"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

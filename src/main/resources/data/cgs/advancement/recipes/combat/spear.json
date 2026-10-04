@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:spear"
+        "recipes": "cgs:spear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

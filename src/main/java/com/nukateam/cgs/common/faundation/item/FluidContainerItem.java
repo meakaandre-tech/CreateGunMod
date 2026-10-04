@@ -121,7 +121,7 @@ public class FluidContainerItem extends BucketItem {
                 return newStack;
             } else {
                 if (!player.getInventory().add(newStack)) {
-                    player.drop(newStack, false);
+                    player.drop(newStack, false, net.minecraft.util.Prediction.SERVER_ONLY);
                 }
                 return stack;
             }

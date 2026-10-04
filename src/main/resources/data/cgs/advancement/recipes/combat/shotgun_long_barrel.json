@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:shotgun_long_barrel"
+        "recipes": "cgs:shotgun_long_barrel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

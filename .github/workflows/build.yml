@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: ["fabric-26.2"]
+    branches: ["fabric-26.3"]
   workflow_dispatch:
 
 permissions:
@@ -23,11 +23,11 @@ jobs:
         shell: bash
         run: |
           mkdir -p libs/nested
-          curl -fsSL -o libs/geckolib-fabric-26.2-5.5.3.jar https://cdn.modrinth.com/data/8BmcQJ2H/versions/L6bn4TS8/geckolib-fabric-26.2-5.5.3.jar
-          curl -fsSL -o libs/ntgl-fabric-26.2.jar https://github.com/meakaandre-tech/NukaTeamGunLib/releases/download/fabric-26.2-latest/ntgl-fabric-26.2.jar
-          curl -fsSL -o libs/create-fly-26.2.jar https://github.com/meakaandre-tech/Create-Fly/releases/download/pack-26.2-latest/create-fly-26.2.jar
+          curl -fsSL -o libs/geckolib-fabric-26.3-5.5.7.jar https://cdn.modrinth.com/data/8BmcQJ2H/versions/kSxHvs99/geckolib-fabric-26.3-5.5.7.jar
+          curl -fsSL -o libs/ntgl-fabric-26.3.jar https://github.com/meakaandre-tech/NukaTeamGunLib/releases/download/fabric-26.3-latest/ntgl-fabric-26.3.jar
+          curl -fsSL -o libs/create-fly-26.3.jar https://github.com/meakaandre-tech/Create-Fly/releases/download/pack-26.3-latest/create-fly-26.3.jar
           # compile with Create Fly's class tweaker, so its injected interfaces and widened members are visible
-          unzip -o -j libs/create-fly-26.2.jar create.classtweaker -d libs/
+          unzip -o -j libs/create-fly-26.3.jar create.classtweaker -d libs/
           # jars nested inside the libraries are needed on the compile classpath too
           for j in libs/*.jar; do unzip -o -j -q "$j" 'META-INF/jars/*.jar' -d libs/nested 2>/dev/null || true; done
           ls -lR libs
@@ -72,7 +72,9 @@ jobs:
           cp build/run/gameTest/logs/latest.log /tmp/ci/smoke/gametest-latest.log 2>/dev/null || true
           cp -r build/run/gameTest/crash-reports /tmp/ci/smoke/gametest-crash-reports 2>/dev/null || true
           # --- client: fabric client game test under a virtual display
-          timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24" ./gradlew runClientGameTest --no-daemon -Dorg.gradle.console=plain > /tmp/ci/smoke/client-gradle.log 2>&1 || true
+          # Minecraft 26.3 opens its window through SDL3; Xvfb has no sRGB GLX visual, so EGL is forced
+          sudo apt-get install -y -qq libegl1 libegl-mesa0 libgles2 libglx-mesa0 > /dev/null 2>&1 || true
+          SDL_VIDEO_FORCE_EGL=1 LIBGL_ALWAYS_SOFTWARE=1 timeout 1200 xvfb-run -a -s "-screen 0 1280x720x24 +extension GLX +render -noreset" ./gradlew runClientGameTest --no-daemon -Dorg.gradle.console=plain > /tmp/ci/smoke/client-gradle.log 2>&1 || true
           d=build/run/clientGameTest
           cp $d/logs/latest.log /tmp/ci/smoke/client-latest.log 2>/dev/null || true
           cp -r $d/crash-reports /tmp/ci/smoke/client-crash-reports 2>/dev/null || true
@@ -149,7 +151,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: cgs-fabric-26.2
+          name: cgs-fabric-26.3
           path: build/libs/*.jar
       - name: Publish the jar as a release
         if: success()
@@ -157,8 +159,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          gh release delete fabric-26.2-latest -y --cleanup-tag -R "${{ github.repository }}" || true
+          gh release delete fabric-26.3-latest -y --cleanup-tag -R "${{ github.repository }}" || true
           sleep 3
           jar=$(ls build/libs/*.jar | grep -v sources | head -1)
-          cp "$jar" cgs-fabric-26.2.jar
-          gh release create fabric-26.2-latest cgs-fabric-26.2.jar -R "${{ github.repository }}" --target "${GITHUB_SHA}" --title "Create: Gunsmithing for Fabric 26.2 (pack build)" --notes "Built from the fabric-26.2 branch at ${GITHUB_SHA}. Needs Create Fly, NTGL (Fabric 26.2 port), GeckoLib 5.5.3 and Fabric API."
+          cp "$jar" cgs-fabric-26.3.jar
+          gh release create fabric-26.3-latest cgs-fabric-26.3.jar -R "${{ github.repository }}" --target "${GITHUB_SHA}" --title "Create: Gunsmithing for Fabric 26.3 (pack build)" --notes "Built from the fabric-26.3 branch at ${GITHUB_SHA}. Needs Create Fly, NTGL (Fabric 26.3 port), GeckoLib 5.5.7 and Fabric API."

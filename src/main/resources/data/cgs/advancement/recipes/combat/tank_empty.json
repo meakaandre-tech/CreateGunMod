@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "cgs:tank_empty"
+        "recipes": "cgs:tank_empty"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
