@@ -1,0 +1,467 @@
+---- Minecraft Crash Report ----
+// Sorry :(
+
+Time: 2026-10-04 13:04:11
+Description: Client shutdown from post-main
+
+java.lang.Error: Watchdog (Client shutdown from post-main)
+	at knot//net.minecraft.server.dedicated.ServerWatchdog.createWatchdogCrashReport(ServerWatchdog.java:83)
+	at knot//com.mojang.blaze3d.platform.ClientShutdownWatchdog.lambda$startShutdownWatchdog$0(ClientShutdownWatchdog.java:44)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Client shutdown watchdog #1
+Stacktrace:
+	at knot//net.minecraft.server.dedicated.ServerWatchdog.createWatchdogCrashReport(ServerWatchdog.java:83)
+
+-- Thread Dump --
+Details:
+	Threads: 
+"DestroyJavaVM" prio=5 Id=119 RUNNABLE
+
+
+"Flywheel Task Executor #0" prio=3 Id=71 WAITING on com.zurrtum.create.client.flywheel.impl.task.ThreadGroupNotifier@64cc9393
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on com.zurrtum.create.client.flywheel.impl.task.ThreadGroupNotifier@64cc9393
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:351)
+	at knot//com.zurrtum.create.client.flywheel.impl.task.ThreadGroupNotifier.awaitNotification(ThreadGroupNotifier.java:9)
+	at knot//com.zurrtum.create.client.flywheel.impl.task.ParallelTaskExecutor$WorkerThread.spinThenWait(ParallelTaskExecutor.java:242)
+	at knot//com.zurrtum.create.client.flywheel.impl.task.ParallelTaskExecutor$WorkerThread.run(ParallelTaskExecutor.java:207)
+
+
+"Client shutdown watchdog #1" daemon prio=5 Id=117 RUNNABLE
+	at java.management@25.0.4.1/sun.management.ThreadImpl.dumpThreads0(Native Method)
+	at java.management@25.0.4.1/sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:505)
+	at java.management@25.0.4.1/sun.management.ThreadImpl.dumpAllThreads(ThreadImpl.java:493)
+	at knot//net.minecraft.util.Util.dumpThreadInfo(Util.java:500)
+	at knot//net.minecraft.server.dedicated.ServerWatchdog.createWatchdogCrashReport(ServerWatchdog.java:79)
+	at knot//com.mojang.blaze3d.platform.ClientShutdownWatchdog.lambda$startShutdownWatchdog$0(ClientShutdownWatchdog.java:44)
+	at knot//com.mojang.blaze3d.platform.ClientShutdownWatchdog$$Lambda/0x000000001b0444d8.run(Unknown Source)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+
+"Netty Epoll IO #0" daemon prio=5 Id=101 RUNNABLE (in native)
+	at knot//io.netty.channel.epoll.Native.epollWait0(Native Method)
+	at knot//io.netty.channel.epoll.Native.epollWait(Native.java:193)
+	at knot//io.netty.channel.epoll.EpollIoHandler.epollWait(EpollIoHandler.java:404)
+	at knot//io.netty.channel.epoll.EpollIoHandler.run(EpollIoHandler.java:470)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@28d39f1b
+
+
+"Netty Epoll IO #1" daemon prio=5 Id=109 RUNNABLE (in native)
+	at knot//io.netty.channel.epoll.Native.epollWait0(Native Method)
+	at knot//io.netty.channel.epoll.Native.epollWait(Native.java:193)
+	at knot//io.netty.channel.epoll.EpollIoHandler.epollWait(EpollIoHandler.java:404)
+	at knot//io.netty.channel.epoll.EpollIoHandler.run(EpollIoHandler.java:470)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2eea8512
+
+
+"Netty Epoll IO #2" daemon prio=5 Id=110 RUNNABLE (in native)
+	at knot//io.netty.channel.epoll.Native.epollWait0(Native Method)
+	at knot//io.netty.channel.epoll.Native.epollWait(Native.java:193)
+	at knot//io.netty.channel.epoll.EpollIoHandler.epollWait(EpollIoHandler.java:404)
+	at knot//io.netty.channel.epoll.EpollIoHandler.run(EpollIoHandler.java:470)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@2ebacb57
+
+
+"Notification Thread" daemon prio=9 Id=21 RUNNABLE
+
+
+"Reference Handler" daemon prio=10 Id=13 RUNNABLE
+	at java.base@25.0.4.1/java.lang.ref.Reference.waitForReferencePendingList(Native Method)
+	at java.base@25.0.4.1/java.lang.ref.Reference.processPendingReferences(Reference.java:246)
+	at java.base@25.0.4.1/java.lang.ref.Reference$ReferenceHandler.run(Reference.java:208)
+
+
+"Signal Dispatcher" daemon prio=9 Id=15 RUNNABLE
+
+
+"Finalizer" daemon prio=8 Id=14 WAITING on java.lang.ref.ReferenceQueue$Lock@3c6bb098
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@3c6bb098
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:351)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:137)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:215)
+	at java.base@25.0.4.1/java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:165)
+
+
+"Sound engine" daemon prio=5 Id=50 WAITING on java.lang.String@694d98a7
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.lang.String@694d98a7
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:223)
+	at knot//net.minecraft.client.sounds.SoundEngineExecutor.waitForTasks(SoundEngineExecutor.java:58)
+	at knot//net.minecraft.util.thread.BlockableEventLoop.managedBlock(BlockableEventLoop.java:158)
+	at knot//net.minecraft.client.sounds.SoundEngineExecutor.run(SoundEngineExecutor.java:51)
+	at knot//net.minecraft.client.sounds.SoundEngineExecutor$$Lambda/0x000000001a6115b8.run(Unknown Source)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+
+"SuperByteBuffer #0" daemon prio=5 Id=47 WAITING on java.util.concurrent.LinkedTransferQueue@2230d9dd
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.LinkedTransferQueue@2230d9dd
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:369)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue.xfer(LinkedTransferQueue.java:613)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue.take(LinkedTransferQueue.java:1257)
+	at knot//com.zurrtum.create.client.catnip.render.SuperByteBufferThread.spinThenTake(SuperByteBufferThread.java:46)
+	at knot//com.zurrtum.create.client.catnip.render.SuperByteBufferThread.run(SuperByteBufferThread.java:56)
+
+
+"SuperByteBuffer #1" daemon prio=5 Id=48 WAITING on java.util.concurrent.LinkedTransferQueue@2230d9dd
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.LinkedTransferQueue@2230d9dd
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.park(LockSupport.java:369)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:458)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue.xfer(LinkedTransferQueue.java:613)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue.take(LinkedTransferQueue.java:1257)
+	at knot//com.zurrtum.create.client.catnip.render.SuperByteBufferThread.spinThenTake(SuperByteBufferThread.java:46)
+	at knot//com.zurrtum.create.client.catnip.render.SuperByteBufferThread.run(SuperByteBufferThread.java:56)
+
+
+"Cleaner-0" daemon prio=8 Id=49 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@1cb3e955
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@1cb3e955
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:123)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:201)
+	at java.base@25.0.4.1/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:146)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+	at java.base@25.0.4.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:148)
+
+
+"Cleaner-1" daemon prio=8 Id=57 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@58b00702
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@58b00702
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:123)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:201)
+	at java.base@25.0.4.1/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:146)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+	at java.base@25.0.4.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:148)
+
+
+"Common-Cleaner" daemon prio=8 Id=22 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@7b72157
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@7b72157
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:123)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:201)
+	at java.base@25.0.4.1/jdk.internal.ref.CleanerImpl.run(CleanerImpl.java:146)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+	at java.base@25.0.4.1/jdk.internal.misc.InnocuousThread.run(InnocuousThread.java:148)
+
+
+"Download-3" daemon prio=5 Id=104 TIMED_WAITING on java.util.concurrent.SynchronousQueue$Transferer@315322c0
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.SynchronousQueue$Transferer@315322c0
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:408)
+	at java.base@25.0.4.1/java.util.concurrent.LinkedTransferQueue$DualNode.await(LinkedTransferQueue.java:452)
+	at java.base@25.0.4.1/java.util.concurrent.SynchronousQueue$Transferer.xferLifo(SynchronousQueue.java:194)
+	at java.base@25.0.4.1/java.util.concurrent.SynchronousQueue.xfer(SynchronousQueue.java:235)
+	at java.base@25.0.4.1/java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:338)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1015)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1076)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+
+"JNA Cleaner" daemon prio=5 Id=36 TIMED_WAITING on java.lang.ref.ReferenceQueue$Lock@6d03010d
+	at java.base@25.0.4.1/java.lang.Object.wait0(Native Method)
+	-  waiting on java.lang.ref.ReferenceQueue$Lock@6d03010d
+	at java.base@25.0.4.1/java.lang.Object.wait(Object.java:389)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove0(ReferenceQueue.java:123)
+	at java.base@25.0.4.1/java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:201)
+	at knot//com.sun.jna.internal.Cleaner$CleanerThread.run(Cleaner.java:154)
+
+
+"Minecraft Services Discovery" daemon prio=5 Id=39 TIMED_WAITING on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@433e4e52
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@433e4e52
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at java.base@25.0.4.1/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1803)
+	at java.base@25.0.4.1/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1166)
+	at java.base@25.0.4.1/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:883)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1016)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1076)
+	at java.base@25.0.4.1/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+
+"Netty Local IO #0" daemon prio=5 Id=68 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@7f907461
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@7f907461
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@7c6ad3f8
+
+
+"Netty Local IO #1" daemon prio=5 Id=69 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@22cdc3c2
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@22cdc3c2
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@7a1d4394
+
+
+"Netty Local IO #2" daemon prio=5 Id=70 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@74dd7f7f
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@74dd7f7f
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@8923170
+
+
+"Netty Local IO #3" daemon prio=5 Id=112 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@3248c66a
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@3248c66a
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@1aa5b2dc
+
+
+"Netty Local IO #4" daemon prio=5 Id=113 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@30e89d0e
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@30e89d0e
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@48701724
+
+
+"Netty Local IO #5" daemon prio=5 Id=114 TIMED_WAITING on io.netty.channel.local.LocalIoHandler@7363078c
+	at java.base@25.0.4.1/jdk.internal.misc.Unsafe.park(Native Method)
+	-  waiting on io.netty.channel.local.LocalIoHandler@7363078c
+	at java.base@25.0.4.1/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:271)
+	at knot//io.netty.channel.local.LocalIoHandler.run(LocalIoHandler.java:63)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:225)
+	at knot//io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:196)
+	at knot//io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1204)
+	at knot//io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at java.base@25.0.4.1/java.lang.Thread.runWith(Thread.java:1487)
+	at java.base@25.0.4.1/java.lang.Thread.run(Thread.java:1474)
+
+	Number of locked synchronizers = 1
+	- java.util.concurrent.locks.ReentrantLock$NonfairSync@76cea9d
+
+
+"Timer hack thread" daemon prio=5 Id=37 TIMED_WAITING
+	at java.base@25.0.4.1/java.lang.Thread.sleepNanos0(Native Method)
+	at java.base@25.0.4.1/java.lang.Thread.sleepNanos(Thread.java:509)
+	at java.base@25.0.4.1/java.lang.Thread.sleep(Thread.java:540)
+	at knot//net.minecraft.util.Util$9.run(Util.java:1009)
+
+
+Stacktrace:
+	at knot//net.minecraft.server.dedicated.ServerWatchdog.createWatchdogCrashReport(ServerWatchdog.java:83)
+	at knot//com.mojang.blaze3d.platform.ClientShutdownWatchdog.lambda$startShutdownWatchdog$0(ClientShutdownWatchdog.java:44)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+
+-- Client watchdog shutdown details --
+Details:
+	Modules: 
+Stacktrace:
+	at knot//com.mojang.blaze3d.platform.ClientShutdownWatchdog.lambda$startShutdownWatchdog$0(ClientShutdownWatchdog.java:44)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+
+-- System Details --
+Details:
+	Minecraft Version: 26.3
+	Minecraft Version ID: 26.3
+	Operating System: Linux (amd64) version 6.17.0-1022-azure
+	Java Version: 25.0.4.1, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 706205168 bytes (673 MiB) / 1619001344 bytes (1544 MiB) up to 4192206848 bytes (3998 MiB)
+	Memory (heap): init: 250MiB, used: 866MiB, committed: 1544MiB, max: 3998MiB
+	Memory (non-heap): init: 007MiB, used: 270MiB, committed: 294MiB, max: 000MiB
+	CPUs: 4
+	Processor Vendor: GenuineIntel
+	Processor Name: INTEL(R) XEON(R) PLATINUM 8573C
+	Identifier: Intel64 Family 6 Model 207 Stepping 2
+	Microarchitecture: unknown
+	Frequency (GHz): 2.30
+	Number of physical packages: 1
+	Number of physical CPUs: 2
+	Number of logical CPUs: 4
+	Graphics card #0 name: hyperv_drmdrmfb
+	Graphics card #0 vendor: unknown
+	Graphics card #0 VRAM (MiB): 0.00
+	Graphics card #0 deviceId: unknown
+	Graphics card #0 versionInfo: unknown
+	Virtual memory max (MiB): 11066.35
+	Virtual memory used (MiB): 4959.23
+	Swap memory total (MiB): 3072.00
+	Swap memory used (MiB): 0.00
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 86663.68, total: 147718.61
+	Space in storage for workdir (MiB): available: 86663.68, total: 147718.61
+	Operating System Version: GNU/Linux Ubuntu 24.04.5 LTS (Noble Numbat) build 6.17.0-1022-azure
+	Process Elevated: false
+	Process Loads: Uptime: 453s, user: 1359s (299.68%), kernel: 28s (6.18%), total: 1387s (305.86%)
+	Process Virtual Size (MiB): 9317.60
+	Process Resident Size (MiB): 3304.52
+	JVM Flags: 1 total; -XX:StackShadowPages=32
+	Debug Flags: 0 total; 
+	Fabric Mods: 
+		cgs: Create: Gunsmithing 1.4.9+26.3
+		cgs_smoketest: Create: Gunsmithing smoke test 1.0.0
+		create: Create Fly 6.0.9-1
+		fabric-advancement-api-v1: Fabric Advancement API (v1) 1.0.0+38c7a2d55d
+		fabric-api: Fabric API 0.161.0+26.3
+		fabric-api-base: Fabric API Base 2.0.6+fcdff87f5d
+		fabric-api-lookup-api-v1: Fabric API Lookup API (v1) 2.0.24+3434d6d95d
+		fabric-biome-api-v1: Fabric Biome API (v1) 20.0.9+74ed1ea55d
+		fabric-block-api-v1: Fabric Block API (v1) 3.1.0+0ae6f9115d
+		fabric-block-getter-api-v2: Fabric BlockGetter API (v2) 2.0.9+3434d6d95d
+		fabric-client-gametest-api-v1: Fabric Client Game Test API (v1) 6.0.7+4be74c3f5d
+		fabric-command-api-v2: Fabric Command API (v2) 3.1.2+fcdff87f5d
+		fabric-content-registries-v0: Fabric Content Registries (v0) 15.0.4+74ed1ea55d
+		fabric-convention-tags-v2: Fabric Convention Tags (v2) 4.10.3+6b5b47fd5d
+		fabric-crash-report-info-v1: Fabric Crash Report Info (v1) 1.0.7+fcdff87f5d
+		fabric-creative-tab-api-v1: Fabric Creative Tab API (v1) 5.0.21+fcdff87f5d
+		fabric-data-attachment-api-v1: Fabric Data Attachment API (v1) 2.2.30+3434d6d95d
+		fabric-data-generation-api-v1: Fabric Data Generation API (v1) 27.2.4+427eab975d
+		fabric-debug-api-v1: Fabric Debug API (v1) 1.0.4+3434d6d95d
+		fabric-dimensions-v1: Fabric Dimensions API (v1) 5.1.19+47f74c985d
+		fabric-entity-events-v1: Fabric Entity Events (v1) 6.0.4+3434d6d95d
+		fabric-events-interaction-v0: Fabric Events Interaction (v0) 5.3.6+3434d6d95d
+		fabric-game-rule-api-v1: Fabric Game Rule API (v1) 4.0.10+3434d6d95d
+		fabric-gametest-api-v1: Fabric Game Test API (v1) 4.0.32+3434d6d95d
+		fabric-item-api-v1: Fabric Item API (v1) 14.7.0+cf6bc2db5d
+		fabric-key-mapping-api-v1: Fabric Key Mapping API (v1) 2.0.8+3434d6d95d
+		fabric-lifecycle-events-v1: Fabric Lifecycle Events (v1) 4.1.9+ffef5f675d
+		fabric-loot-api-v3: Fabric Loot API (v3) 4.0.8+4068fd645d
+		fabric-menu-api-v1: Fabric Menu API (v1) 2.0.27+ed66f0a35d
+		fabric-message-api-v1: Fabric Message API (v1) 7.0.10+3434d6d95d
+		fabric-model-loading-api-v1: Fabric Model Loading API (v1) 8.0.35+fcdff87f5d
+		fabric-networking-api-v1: Fabric Networking API (v1) 6.3.8+fcdff87f5d
+		fabric-object-builder-api-v1: Fabric Object Builder API (v1) 24.1.9+3434d6d95d
+		fabric-particles-v1: Fabric Particles (v1) 5.0.24+3434d6d95d
+		fabric-permission-api-v1: Fabric Permission API (v1) 1.0.8+fcdff87f5d
+		fabric-recipe-api-v1: Fabric Recipe API (v1) 10.0.8+fcdff87f5d
+		fabric-registry-sync-v0: Fabric Registry Sync (v0) 8.0.1+fcdff87f5d
+		fabric-renderer-api-v1: Fabric Renderer API (v1) 17.0.15+79385d0b5d
+		fabric-renderer-indigo: Fabric Renderer - Indigo 9.1.23+b9d63e335d
+		fabric-rendering-fluids-v1: Fabric Rendering Fluids (v1) 6.0.6+3434d6d95d
+		fabric-rendering-v1: Fabric Rendering (v1) 27.0.14+901a437c5d
+		fabric-resource-conditions-api-v1: Fabric Resource Conditions API (v1) 6.1.5+3434d6d95d
+		fabric-resource-loader-v0: Fabric Resource Loader (v0) 3.3.26+4fc5413f5d
+		fabric-resource-loader-v1: Fabric Resource Loader (v1) 3.0.4+fcdff87f5d
+		fabric-screen-api-v1: Fabric Screen API (v1) 5.2.4+48607d035d
+		fabric-serialization-api-v1: Fabric Serialization API (v1) 2.0.7+74ed1ea55d
+		fabric-sound-api-v1: Fabric Sound API (v1) 2.0.7+3434d6d95d
+		fabric-tag-api-v1: Fabric Tag API (v1) 2.1.10+fcdff87f5d
+		fabric-transfer-api-v1: Fabric Transfer API (v1) 8.0.25+fcdff87f5d
+		fabric-transitive-access-wideners-v1: Fabric Transitive Access Wideners (v1) 8.1.16+52268a0e5d
+		fabricloader: Fabric Loader 0.19.5
+		geckolib: GeckoLib 5 5.5.7
+		java: OpenJDK 64-Bit Server VM 25
+		minecraft: Minecraft 26.3
+		mixinextras: MixinExtras 0.5.5
+		ntgl: NukaTeam's Gun Lib 3.1.8+26.3
+	Launched Version: Fabric
+	Backend library: LWJGL version 3.4.3-snapshot
+	Window size: <not initialized>
+	Surface Info: <no surface>
+	SDL Platform: Linux
+	Graphics Device: llvmpipe (LLVM 20.1.2, 256 bits)
+	Graphics Backend: OpenGL
+	Graphics Vendor: Mesa
+	Graphics Drivers: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4
+	Graphics Device Extensions: GL_ARB_multi_draw_indirect, GL_ARB_buffer_storage, GL_ARB_shader_draw_parameters, GL_ARB_base_instance, GL_KHR_debug, GL_ARB_draw_indirect, GL_ARB_clip_control, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+	Graphics Device Type: CPU
+	Graphics Device Features: DeviceFeatures[wireframeFillMode=true, shaderDrawParameters=true, multiDrawDirectInterleaved=false, multiDrawDirectSeparate=true, multiDrawIndirect=true, drawIndirect=true, nonZeroFirstInstance=true, persistentMapping=true]
+	GL debug messages: id=5, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='0:24(10): warning: `_flw_uberFogIndex' used uninitialized' x 1
+id=6, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='12:3(22): warning: `flw_fragLight' used uninitialized' x 1
+id=7, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='12:5(6): warning: `flw_material' used uninitialized' x 1
+id=8, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='20:73(6): warning: `flw_material' used uninitialized' x 1
+id=9, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='20:75(13): warning: `flw_material' used uninitialized' x 1
+id=10, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='20:115(6): warning: `flw_material' used uninitialized' x 1
+id=11, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='20:121(6): warning: `flw_material' used uninitialized' x 1
+id=12, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='11:6(36): warning: `flw_vertexPos' used uninitialized' x 1
+id=13, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='11:9(59): warning: `flw_vertexNormal' used uninitialized' x 1
+id=14, source=SHADER COMPILER, type=OTHER, severity=HIGH, message='11:11(53): warning: `flw_vertexLight' used uninitialized' x 1
+	Is Modded: Definitely; Client brand changed to 'fabric'
+	Universe: 404
+	Type: Client
+	Locale: en
+	System encoding: UTF-8
+	File encoding: UTF-8
+	CPU: 4x INTEL(R) XEON(R) PLATINUM 8573C
