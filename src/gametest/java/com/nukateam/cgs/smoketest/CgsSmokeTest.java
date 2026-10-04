@@ -127,11 +127,51 @@ public class CgsSmokeTest implements FabricClientGameTest {
                 context.waitTicks(15);
                 context.runOnClient(mc -> log("fuel: water after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.WATER)
                         + " offhand " + mc.player.getOffhandItem()));
+                // the lava tank is a furnace fuel (cooking fuel component) and feeds the engine like a lava bucket
+                server.runCommand("item replace entity @a weapon.offhand with cgs:tank_lava");
+                context.waitTicks(10);
+                context.runOnClient(mc -> log("fuel: burnable before " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.BURNABLE)
+                        + " offhand " + mc.player.getOffhandItem()));
+                context.getInput().holdMouse(InputConstants.MOUSE_BUTTON_RIGHT);
+                context.waitTicks(3);
+                context.getInput().releaseMouse(InputConstants.MOUSE_BUTTON_RIGHT);
+                context.waitTicks(15);
+                context.runOnClient(mc -> log("fuel: burnable after " + FuelUtils.getFuel(mc.player.getMainHandItem(), CgsAmmoHolders.BURNABLE)
+                        + " offhand " + mc.player.getOffhandItem()));
                 server.runCommand("gamemode creative @a");
                 server.runCommand("item replace entity @a weapon.offhand with minecraft:air");
                 server.runCommand("kill @e[type=!minecraft:player]");
                 context.waitTicks(5);
             });
+
+            step("data: world generation, loot, fuel, tags", () -> server.runOnServer(minecraftServer -> {
+                var player = minecraftServer.getPlayerList().getPlayers().getFirst();
+                var level = player.level();
+                var lead = com.nukateam.cgs.common.faundation.registry.CgsBlocks.LEAD_ORE.get();
+                var deepLead = com.nukateam.cgs.common.faundation.registry.CgsBlocks.DEEPSLATE_LEAD_ORE.get();
+                var sulfur = com.nukateam.cgs.common.faundation.registry.CgsBlocks.SULFUR_ORE.get();
+                log("worldgen: biome at the player " + level.getBiome(player.blockPosition()).unwrapKey().map(key -> key.identifier().toString()).orElse("?")
+                        + ", overworld chunks around the player " + countBlocks(level, baseX >> 4, baseZ >> 4, 2, lead, deepLead, sulfur));
+                var nether = minecraftServer.getLevel(net.minecraft.world.level.Level.NETHER);
+                log("worldgen: nether chunks around 0,0 " + countBlocks(nether, 0, 0, 1, lead, deepLead, sulfur));
+
+                var pickaxe = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.IRON_PICKAXE);
+                for (var name : new String[]{"lead_ore", "deepslate_lead_ore", "sulfur_ore", "raw_lead_block", "lead_block", "steel_block", "guano_block"}) {
+                    var block = net.minecraft.core.registries.BuiltInRegistries.BLOCK.getValue(Gunsmithing.cgsResource(name));
+                    log("loot: " + name + " mined with an iron pickaxe -> "
+                            + net.minecraft.world.level.block.Block.getDrops(block.defaultBlockState(), level, player.blockPosition(), null, player, pickaxe));
+                }
+
+                for (var name : new String[]{"cgs:tank_lava", "cgs:tank_water", "minecraft:lava_bucket"}) {
+                    var stack = new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse(name)));
+                    log("fuel: " + name + " burn time " + com.nukateam.ntgl.platform.PlatformHelper.getBurnTime(stack));
+                }
+
+                for (var name : new String[]{"lead_ingot", "steel_ingot", "lead_nugget", "raw_lead", "steel_sheet", "lead_block", "steel_block", "raw_lead_block", "lead_ore", "sulfur"}) {
+                    var item = net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(Gunsmithing.cgsResource(name));
+                    log("tags: " + name + " " + item.builtInRegistryHolder().tags().map(tag -> tag.location().toString()).sorted().toList());
+                }
+            }));
 
             step("air from a backtank", () -> {
                 arena(context, server);
@@ -474,6 +514,26 @@ public class CgsSmokeTest implements FabricClientGameTest {
         at(server, "fill {x-5} 150 {z+10} {x+5} 156 {z+10} minecraft:smooth_stone");
         at(server, "tp @a {x+0.5} 150 {z+0.5} 0 0");
         context.waitTicks(5);
+    }
+
+    /** Counts the given blocks in the square of (2 * radius + 1)^2 chunks around a chunk; generates the chunks when needed. */
+    private static java.util.Map<String, Integer> countBlocks(net.minecraft.server.level.ServerLevel level, int chunkX, int chunkZ, int radius,
+                                                              net.minecraft.world.level.block.Block... blocks) {
+        var counts = new java.util.TreeMap<String, Integer>();
+        var cursor = new net.minecraft.core.BlockPos.MutableBlockPos();
+        for (int cx = chunkX - radius; cx <= chunkX + radius; cx++)
+            for (int cz = chunkZ - radius; cz <= chunkZ + radius; cz++) {
+                var chunk = level.getChunk(cx, cz);
+                for (int x = 0; x < 16; x++)
+                    for (int z = 0; z < 16; z++)
+                        for (int y = level.getMinY(); y <= level.getMaxY(); y++) {
+                            var state = chunk.getBlockState(cursor.set((cx << 4) + x, y, (cz << 4) + z));
+                            for (var block : blocks)
+                                if (state.getBlock() == block)
+                                    counts.merge(net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(block).getPath(), 1, Integer::sum);
+                        }
+            }
+        return counts;
     }
 
     private static void attach(TestServerContext server, String... attachments) {
